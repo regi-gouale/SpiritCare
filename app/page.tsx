@@ -1,5 +1,5 @@
 import { getPersonsAction } from "@/actions/get-persons-action";
-import { PersonsTable } from "@/components/persons-table";
+import { PersonsTable } from "@/components/persons/table";
 import { Person } from "@prisma/client";
 
 export default async function Home() {
