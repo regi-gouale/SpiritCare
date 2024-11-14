@@ -89,7 +89,7 @@
   }
 }
 
-.rdp [ariahidden="true"] {
+.rdp [aria-hidden="true"] {
   @apply hidden;
 }
 

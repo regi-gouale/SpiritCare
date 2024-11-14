@@ -7,14 +7,33 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { PhoneInput } from "@/components/ui/phone-input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { createPersonFormSchema } from "@/lib/schema";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Gender, Status } from "@prisma/client";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { PhoneInput } from "../ui/phone-input";
+import { Calendar } from "../ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export const AddPersonForm = () => {
   const form = useForm<z.infer<typeof createPersonFormSchema>>({
@@ -91,10 +110,9 @@ export const AddPersonForm = () => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel>Nom</FormLabel> */}
               <FormControl>
                 <PhoneInput
-                  placeholder="Téléphone"
+                  placeholder="+33 6 12 34 57 89"
                   {...field}
                   className="rounded-full"
                 />
@@ -103,6 +121,107 @@ export const AddPersonForm = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="dateOfBirth"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date de naissance</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal font-epilogue rounded-full",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP", { locale: fr })
+                      ) : (
+                        <span>Choisir une date</span>
+                      )}
+                      <CalendarIcon className="ml-auto size-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    captionLayout="dropdown-buttons"
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    defaultMonth={field.value || new Date()}
+                    locale={fr}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </FormItem>
+          )}
+        />
+        <div className="grid grid-cols-2 space-x-4">
+          <FormField
+            control={form.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="rounded-full">
+                      <SelectValue placeholder="Choisir un sexe" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={Gender.MALE}>Homme</SelectItem>
+                    <SelectItem value={Gender.FEMALE}>Femme</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="rounded-full">
+                      <SelectValue placeholder="Choisir un sexe" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={Status.MEMBER}>Membre</SelectItem>
+                    <SelectItem value={Status.AIDE}>AIDE</SelectItem>
+                    <SelectItem value={Status.STAR}>STAR</SelectItem>
+                    <SelectItem value={Status.RESPONSABLE}>
+                      Responsable de département
+                    </SelectItem>
+                    <SelectItem value={Status.MINISTRE}>
+                      Responsable de ministère
+                    </SelectItem>
+                    <SelectItem value={Status.ASSISTANT_PASTEUR}>
+                      Assistant Pasteur
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+        </div>
         <div className="grid grid-cols-2 space-x-4">
           <div></div>
           <Button type="submit" className="rounded-full">
