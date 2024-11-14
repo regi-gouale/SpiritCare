@@ -15,23 +15,37 @@ export const PersonsTableFilter = ({
 }: {
   table: ReactTable<Person>;
 }) => (
-  <div className="flex items-center">
-    <Input placeholder="Filter emails" />
+  <div className="flex items-center justify-between font-lato">
+    <Input
+      placeholder="Rechercher une personne"
+      value={(table.getColumn("Nom")?.getFilterValue() as string) ?? ""}
+      onChange={(event) =>
+        table.getColumn("Nom")?.setFilterValue(event.target.value)
+      }
+      className="mr-4 max-w-md rounded-full"
+    />
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>
-          Columns <ChevronDown />
+        <Button variant="secondary" className="ml-auto rounded-full border">
+          Colonnes <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {table
           .getAllColumns()
           .filter((column) => column.getCanHide())
-          .map((column) => (
-            <DropdownMenuCheckboxItem key={column.id}>
-              {column.id}
-            </DropdownMenuCheckboxItem>
-          ))}
+          .map((column) => {
+            return (
+              <DropdownMenuCheckboxItem
+                key={column.id}
+                className="font-lato"
+                checked={column.getIsVisible()}
+                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+              >
+                {column.id}
+              </DropdownMenuCheckboxItem>
+            );
+          })}
       </DropdownMenuContent>
     </DropdownMenu>
   </div>

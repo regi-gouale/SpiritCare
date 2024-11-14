@@ -10,7 +10,7 @@ export const prisma =
         fullname: {
           needs: { firstname: true, lastname: true },
           compute(person) {
-            return `${person.firstname} ${person.lastname}`;
+            return `${person.firstname} ${person.lastname.toUpperCase()}`;
           },
         },
       },
