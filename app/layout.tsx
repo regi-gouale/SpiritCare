@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Epilogue, Lato } from "next/font/google";
 import "./globals.css";
@@ -26,10 +27,11 @@ export default function RootLayout({
   modal?: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${lato.variable} ${epilogue.variable} antialiased`}>
         {modal}
         {children}
+        <Toaster />
       </body>
     </html>
   );

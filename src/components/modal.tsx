@@ -3,6 +3,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogOverlay,
   DialogTitle,
@@ -12,6 +13,7 @@ import { useRouter } from "next/navigation";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerOverlay,
   DrawerTitle,
@@ -34,11 +36,17 @@ export const Modal = ({ children, title, description }: ModalProps) => {
       <Drawer defaultOpen={true} open={true} onOpenChange={handleOpenChange}>
         <DrawerOverlay className="bg-black/5">
           <DrawerContent className="overflow-y-hidden">
-            <DrawerHeader>
-              <DrawerTitle>{title}</DrawerTitle>
-              <p className="text-sm text-muted-foreground">{description}</p>
-            </DrawerHeader>
-            {children}
+            <div className="mx-auto w-full max-w-xl p-4">
+              <DrawerHeader>
+                <DrawerTitle className="text-center font-lato font-semibold">
+                  {title}
+                </DrawerTitle>
+                <DrawerDescription className="text-xs text-muted-foreground">
+                  {description}
+                </DrawerDescription>
+              </DrawerHeader>
+              {children}
+            </div>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
@@ -49,8 +57,12 @@ export const Modal = ({ children, title, description }: ModalProps) => {
       <DialogOverlay className="bg-black/5">
         <DialogContent className="overflow-y-hidden">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <DialogTitle className="text-center font-lato font-semibold">
+              {title}
+            </DialogTitle>
+            <DialogDescription className="text-center text-xs text-muted-foreground">
+              {description}
+            </DialogDescription>
           </DialogHeader>
           {children}
         </DialogContent>
