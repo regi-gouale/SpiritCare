@@ -9,7 +9,6 @@ import { revalidatePath } from "next/cache";
 export async function createPersonAction(
   data: z.infer<typeof createPersonFormSchema>
 ) {
-  console.log("Données reçues :", data);
   try {
     // Vérifier que la personne n'existe pas déjà
     const person = await prisma.person.findFirst({

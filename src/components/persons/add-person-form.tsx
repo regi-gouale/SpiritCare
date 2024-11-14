@@ -53,6 +53,14 @@ export const AddPersonForm = () => {
   });
 
   async function onSubmit(data: z.infer<typeof createPersonFormSchema>) {
+    const result = createPersonFormSchema.safeParse(data);
+
+    if (!result.success) {
+      toast({
+        title: "Erreur",
+        description: result.error.errors[0].message,
+      });
+    }
     const response = await createPersonAction(data);
     if (response.ok) {
       toast({
