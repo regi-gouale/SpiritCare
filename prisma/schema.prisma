@@ -24,6 +24,11 @@ enum Status {
   ASSISTANT_PASTEUR
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
 model Person {
   id          String   @id @default(cuid())
   firstname   String
@@ -31,6 +36,7 @@ model Person {
   email       String   @unique
   phone       String
   dateOfBirth DateTime
+  gender      Gender   @default(MALE)
   status      Status
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
