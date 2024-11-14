@@ -4,12 +4,18 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { z } from "zod";
 
 export const createPersonFormSchema = z.object({
-  firstname: z.string({ required_error: "Le prénom est requis" }),
-  lastname: z.string({ required_error: "Le nom est requis" }),
-  email: z.string({
-    required_error: "L'email est requis",
-    invalid_type_error: "L'email est invalide",
+  firstname: z.string({ required_error: "Le prénom est requis" }).min(2, {
+    message: "Le prénom doit contenir au moins 2 caractères",
   }),
+  lastname: z.string({ required_error: "Le nom est requis" }).min(2, {
+    message: "Le nom doit contenir au moins 2 caractères",
+  }),
+  email: z
+    .string({
+      required_error: "L'email est requis",
+      invalid_type_error: "L'email est invalide",
+    })
+    .email({ message: "L'email est invalide" }),
   phone: z
     .string()
     .refine(isValidPhoneNumber, {

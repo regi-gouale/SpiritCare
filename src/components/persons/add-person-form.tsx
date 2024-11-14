@@ -2,6 +2,7 @@
 
 import { createPersonAction } from "@/actions/person-actions";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -17,6 +18,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
 import { createPersonFormSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,18 +33,12 @@ import { Gender, Status } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Calendar } from "../ui/calendar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 export const AddPersonForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof createPersonFormSchema>>({
     resolver: zodResolver(createPersonFormSchema),
     defaultValues: {
@@ -49,9 +52,25 @@ export const AddPersonForm = () => {
     },
   });
 
+  async function onSubmit(data: z.infer<typeof createPersonFormSchema>) {
+    const response = await createPersonAction(data);
+    if (response.ok) {
+      toast({
+        title: "Personne ajoutée",
+        description: `${data.firstname} ${data.lastname} a été ajouté avec succès`,
+      });
+      form.reset();
+      router.back();
+    } else
+      toast({
+        title: "Erreur",
+        description: response.error,
+      });
+  }
+
   return (
     <Form {...form}>
-      <form action={createPersonAction} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid w-full grid-cols-2 items-center justify-between space-x-4">
           <FormField
             control={form.control}
