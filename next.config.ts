@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  experimental: {
+    staleTimes: {
+      dynamic: 0,
+      static: 180,
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -9,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "1337",
         pathname: "/uploads/**/*",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
       },
       {
         protocol: "https",
