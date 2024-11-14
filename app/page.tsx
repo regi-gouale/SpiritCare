@@ -1,8 +1,5 @@
-import { getPersonsAction } from "@/actions/get-persons-action";
-import { PersonsTable } from "@/components/persons/table";
 import { Person } from "@prisma/client";
-import { PlusIcon } from "lucide-react";
-import Link from "next/link";
+import { Link, PlusIcon } from "lucide-react";
 
 export default async function Home() {
   const persons: Person[] | Error = await getPersonsAction();
