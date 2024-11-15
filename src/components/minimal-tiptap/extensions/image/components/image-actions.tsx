@@ -137,7 +137,7 @@ export const ImageActions: React.FC<ImageActionsProps> = React.memo(
             <DropdownMenuTrigger asChild>
               <ActionButton
                 icon={<DotsHorizontalIcon className="size-4" />}
-                tooltip="Open menu"
+                tooltip="Ouvrir le menu"
                 onClick={(e) => e.preventDefault()}
               />
             </DropdownMenuTrigger>

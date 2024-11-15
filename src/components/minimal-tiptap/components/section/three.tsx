@@ -168,7 +168,7 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
     <Popover>
       <PopoverTrigger asChild>
         <ToolbarButton
-          tooltip="Text color"
+          tooltip="Couleur du texte"
           aria-label="Text color"
           className="w-12"
           size={size}

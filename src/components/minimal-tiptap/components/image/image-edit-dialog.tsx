@@ -36,9 +36,9 @@ const ImageEditDialog = ({ editor, size, variant }: ImageEditDialogProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Select image</DialogTitle>
+          <DialogTitle>Choisir une image</DialogTitle>
           <DialogDescription className="sr-only">
-            Upload an image from your computer
+            Téléverser une image depuis votre ordinateur
           </DialogDescription>
         </DialogHeader>
         <ImageEditBlock editor={editor} close={() => setOpen(false)} />

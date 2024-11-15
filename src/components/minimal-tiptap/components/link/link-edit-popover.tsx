@@ -53,7 +53,7 @@ const LinkEditPopover = ({ editor, size, variant }: LinkEditPopoverProps) => {
       <PopoverTrigger asChild>
         <ToolbarButton
           isActive={editor.isActive("link")}
-          tooltip="Link"
+          tooltip="Lien"
           aria-label="Insert link"
           disabled={editor.isActive("codeBlock")}
           size={size}
