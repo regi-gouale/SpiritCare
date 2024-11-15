@@ -9,15 +9,16 @@ export async function getPersonsAction(): Promise<Person[] | Error> {
       orderBy: {
         lastname: "asc",
       },
-      select: {
-        firstname: true,
-        lastname: true,
-        email: true,
-        phone: true,
-        dateOfBirth: true,
-        gender: true,
-        status: true,
-      },
+      // select: {
+      //   firstname: true,
+      //   lastname: true,
+      //   fullname: true,
+      //   email: true,
+      //   phone: true,
+      //   dateOfBirth: true,
+      //   gender: true,
+      //   status: true,
+      // },
     });
     return JSON.parse(JSON.stringify(allPersons)) as Person[];
   } catch (error) {
