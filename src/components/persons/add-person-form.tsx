@@ -47,8 +47,8 @@ export const AddPersonForm = () => {
       email: "",
       phone: "",
       dateOfBirth: new Date("2000-01-01"),
-      gender: "MALE",
-      status: "MEMBER",
+      gender: Gender.MALE,
+      status: Status.MEMBER,
     },
   });
 
@@ -78,7 +78,10 @@ export const AddPersonForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full max-w-4xl space-y-4"
+      >
         <div className="grid w-full grid-cols-2 items-center justify-between space-x-4">
           <FormField
             control={form.control}
@@ -152,15 +155,17 @@ export const AddPersonForm = () => {
           control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date de naissance</FormLabel>
+            <FormItem className="flex w-full grid-cols-5 items-center justify-between space-x-4">
+              <FormLabel className="col-span-2 w-auto font-lato text-sm">
+                Date de naissance :
+              </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full pl-3 text-left font-normal font-epilogue rounded-full",
+                        "w-full text-left font-normal font-epilogue rounded-full col-span-3",
                         !field.value && "text-muted-foreground"
                       )}
                     >

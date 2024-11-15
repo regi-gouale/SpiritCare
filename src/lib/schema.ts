@@ -29,3 +29,17 @@ export const createPersonFormSchema = z.object({
   gender: z.nativeEnum(Gender),
   status: z.nativeEnum(Status),
 });
+
+export const createReportFormSchema = z.object({
+  personId: z.string(),
+  date: z.date({
+    required_error: "La date est requise",
+    invalid_type_error: "La date est invalide",
+  }),
+  content: z
+    .string({
+      required_error: "Le contenu est requis",
+      message: "Le contenu doit contenir au moins 10 caractères",
+    })
+    .min(10),
+});

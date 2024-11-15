@@ -12,7 +12,8 @@ import { Person } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDistanceToNowStrict } from "date-fns";
 import { fr } from "date-fns/locale";
-import { ArrowUpDown, Link, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { formatPhoneNumber } from "react-phone-number-input";
 
 export const personsTableColumns: ColumnDef<Person>[] = [
