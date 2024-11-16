@@ -1,3 +1,25 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('MEMBER', 'STAR', 'AIDE', 'ADMIN', 'RESPONSABLE', 'MINISTRE', 'PASTEUR', 'ASSISTANT_PASTEUR');
+
+-- CreateEnum
+CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
+
+-- CreateTable
+CREATE TABLE "Person" (
+    "id" TEXT NOT NULL,
+    "firstname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "gender" "Gender" NOT NULL DEFAULT 'MALE',
+    "status" "Status" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateTable
 CREATE TABLE "Church" (
     "id" TEXT NOT NULL,
@@ -63,6 +85,21 @@ CREATE TABLE "verification_tokens" (
     "expires" TIMESTAMP(3) NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Report" (
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "personId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Report_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Person_email_key" ON "Person"("email");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Church_joinCode_key" ON "Church"("joinCode");
 
@@ -89,3 +126,6 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Report" ADD CONSTRAINT "Report_personId_fkey" FOREIGN KEY ("personId") REFERENCES "Person"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
