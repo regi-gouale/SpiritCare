@@ -21,9 +21,9 @@ export const PersonsTablePagination = ({
 }: {
   table: ReactTable<Person>;
 }) => (
-  <div className="mx-auto flex items-center justify-between space-x-2 py-4 font-epilogue text-sm text-muted-foreground">
+  <div className="mx-auto flex items-center justify-between space-x-2 py-4 font-epilogue text-xs text-muted-foreground">
     <div className="flex items-center space-x-2">
-      <p className="text-sm font-medium">Lignes par page</p>
+      <p className="text-xs font-medium">Lignes par page</p>
       <Select
         value={`${table.getState().pagination.pageSize}`}
         onValueChange={(value) => {
@@ -43,7 +43,7 @@ export const PersonsTablePagination = ({
       </Select>
     </div>
     <div className="flex items-center space-x-4">
-      <div className="flex items-center justify-center text-sm">
+      <div className="flex items-center justify-center text-xs">
         Page {table.getState().pagination.pageIndex + 1} sur{" "}
         {table.getPageCount()}
       </div>

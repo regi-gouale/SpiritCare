@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { Gender } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { ArrowLeftIcon, Eye, PenIcon, TrashIcon } from "lucide-react";
+import { ArrowLeftIcon, Eye, PenIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 
 type PersonIdPageProps = Promise<{
@@ -53,26 +53,30 @@ export default async function PersonIdPage(props: {
             <Link href="/">
               <ArrowLeftIcon className="size-8 cursor-pointer" />
             </Link>
-            <h1 className="text-center font-lato text-4xl font-black">
+            <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">
               {`${person.firstname} ${person.lastname.toLocaleUpperCase()}`}
             </h1>
             <Link href={`/persons/${personId}/add-report`}>
-              <Button variant="default" className="rounded-full">
-                Ajouter un rapport
+              <Button
+                variant="default"
+                className="rounded-full font-lato font-semibold"
+              >
+                <PlusIcon className="size-4" />
+                Rapport
               </Button>
             </Link>
           </div>
-          <Card className="w-full max-w-3xl">
+          <Card className="w-full max-w-3xl rounded-3xl">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                Informations
+                <span className="text-xl">Informations</span>
                 <Link href={`/persons/${personId}/edit`}>
                   <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full"
+                    variant="secondary"
+                    className="cursor-pointer rounded-full"
                   >
-                    <PenIcon className="size-4 cursor-pointer" />
+                    <PenIcon className="size-3" />
+                    <span className="font-lato font-semibold">Modifier</span>
                   </Button>
                 </Link>
               </CardTitle>
