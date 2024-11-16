@@ -1,6 +1,6 @@
 "use client";
 
-import { createPersonAction } from "@/actions/person-actions";
+import { createPerson } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -25,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
 import { createPersonFormSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +34,7 @@ import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export const AddPersonForm = () => {
@@ -56,30 +56,25 @@ export const AddPersonForm = () => {
     const result = createPersonFormSchema.safeParse(data);
 
     if (!result.success) {
-      toast({
-        title: "Erreur",
-        description: result.error.errors[0].message,
-      });
+      toast.error("Veuillez remplir correctement le formulaire");
+      return;
     }
-    const response = await createPersonAction(data);
+    const response = await createPerson(data);
     if (response.ok) {
-      toast({
-        title: "Personne ajoutée",
-        description: `${data.firstname} ${data.lastname} a été ajouté avec succès`,
-      });
+      toast.success(
+        `${data.firstname} ${data.lastname} a été ajouté avec succès`
+      );
+
       form.reset();
       router.back();
-    } else
-      toast({
-        title: "Erreur",
-        description: response.error,
-      });
+    } else toast.error(response.error);
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        // action={form.handleSubmit(createPerson)}
         className="w-full max-w-4xl space-y-4"
       >
         <div className="grid w-full grid-cols-2 items-center justify-between space-x-4">
@@ -186,12 +181,12 @@ export const AddPersonForm = () => {
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
                     }
-                    captionLayout="dropdown-buttons"
+                    captionLayout={"dropdown"}
                     fromYear={1900}
                     toYear={new Date().getFullYear()}
                     defaultMonth={field.value || new Date()}
                     locale={fr}
-                    initialFocus
+                    // initialFocus
                   />
                 </PopoverContent>
               </Popover>

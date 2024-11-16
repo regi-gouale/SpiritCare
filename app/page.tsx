@@ -1,15 +1,11 @@
-import { getPersonsAction } from "@/actions/get-persons-action";
 import { PersonsTable } from "@/components/persons/table";
+import { prisma } from "@/lib/prisma";
 import { Person } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function Home() {
-  const persons: Person[] | Error = await getPersonsAction();
-
-  if (persons instanceof Error) {
-    return <div>{persons.message}</div>;
-  }
+  const persons: Person[] = await prisma.person.findMany();
 
   return (
     <div className="h-full">
@@ -26,7 +22,7 @@ export default async function Home() {
             <PlusIcon className="size-4 text-primary-foreground" />
           </Link>
         </div>
-        <PersonsTable persons={persons} />
+        <PersonsTable persons={JSON.parse(JSON.stringify(persons))} />
       </main>
     </div>
   );

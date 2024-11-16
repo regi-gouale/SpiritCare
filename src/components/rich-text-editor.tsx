@@ -1,6 +1,8 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
+// import Document from "@tiptap/extension-document";
+// import Heading from "@tiptap/extension-heading";
 import { EditorContent, useEditor, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Bold, Italic, List, ListOrdered, Strikethrough } from "lucide-react";
@@ -31,7 +33,16 @@ const RichTextEditor = ({
             class: "list-disc pl-4",
           },
         },
+        heading: {
+          HTMLAttributes: {
+            class: "font-bold",
+          },
+        },
       }),
+      // Document,
+      // Heading.configure({
+      //   levels: [1, 2, 3],
+      // }),
     ],
     content: value, // Set the initial content with the provided value
     onUpdate: ({ editor }) => {
@@ -85,6 +96,33 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered className="size-4" />
+      </Toggle>
+      <Toggle
+        size={"sm"}
+        pressed={editor.isActive("heading", { level: 1 })}
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 1 }).run()
+        }
+      >
+        H1
+      </Toggle>
+      <Toggle
+        size={"sm"}
+        pressed={editor.isActive("heading", { level: 2 })}
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 2 }).run()
+        }
+      >
+        H2
+      </Toggle>
+      <Toggle
+        size={"sm"}
+        pressed={editor.isActive("heading", { level: 3 })}
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 3 }).run()
+        }
+      >
+        H3
       </Toggle>
     </div>
   );
