@@ -85,7 +85,12 @@ export const PersonsTable = ({ persons }: PersonsTableProps) => {
                   className={index % 2 === 0 ? "bg-primary/5" : ""}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      onClick={() => {
+                        window.location.href = `/persons/${row.original.id}`;
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -127,14 +127,10 @@ export const personsTableColumns: ColumnDef<Person>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(
-                  `${person.firstname} ${person.lastname}`
-                )
-              }
-            >
-              Copier le nom
+            <DropdownMenuItem>
+              <Link href={`/persons/${person.id}`} className="block w-full">
+                Voir le profil
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
