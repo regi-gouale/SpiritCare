@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { Gender } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { ArrowLeftIcon, Eye, PenIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { ArrowLeftIcon, Eye, PenIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 
 type PersonIdPageProps = Promise<{
@@ -152,19 +152,13 @@ export default async function PersonIdPage(props: {
                             <Eye className="size-4 cursor-pointer" />
                           </Button>
                         </Link>
-                        <Button
+                        {/* <Button
                           variant="outline"
                           size="icon"
                           className="rounded-full"
-                          // onClick={async () => {
-                          //   await prisma.report.delete({
-                          //     where: { id: report.id },
-                          //   });
-                          //   window.location.reload();
-                          // }}
                         >
                           <TrashIcon className="size-4 cursor-pointer" />
-                        </Button>
+                        </Button> */}
                       </div>
                     </CardTitle>
                   </CardHeader>
