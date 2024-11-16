@@ -1,15 +1,13 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
+import { createPersonFormSchema, createReportFormSchema } from "@/lib/schema";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-import { prisma } from "@/lib/prisma";
-import { createPersonFormSchema } from "@/lib/schema";
-import { Person } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-
-export async function createPersonAction(
+export const createPerson = async (
   data: z.infer<typeof createPersonFormSchema>
-) {
+) => {
   try {
     // Vérifier que la personne n'existe pas déjà
     const person = await prisma.person.findFirst({
@@ -45,28 +43,28 @@ export async function createPersonAction(
       data: null,
     };
   }
-}
+};
 
-export async function getPersonsAction(): Promise<Person[] | Error> {
+export const createReport = async (
+  data: z.infer<typeof createReportFormSchema>
+) => {
   try {
-    const allPersons = await prisma.person.findMany({
-      orderBy: {
-        lastname: "asc",
-      },
-      // select: {
-      //   firstname: true,
-      //   lastname: true,
-      //   fullname: true,
-      //   email: true,
-      //   phone: true,
-      //   dateOfBirth: true,
-      //   gender: true,
-      //   status: true,
-      // },
+    const reportCreated = await prisma.report.create({
+      data: data,
     });
-    return JSON.parse(JSON.stringify(allPersons)) as Person[];
-  } catch (error) {
-    console.error(error);
-    return error as Error;
+
+    revalidatePath(`/persons/${data.personId}`);
+    return {
+      ok: true,
+      error: null,
+      data: JSON.parse(JSON.stringify(reportCreated)),
+    };
+  } catch {
+    console.error("Une erreur est survenue lors de la création du rapport");
+    return {
+      ok: false,
+      error: "Une erreur est survenue lors de la création du rapport",
+      data: null,
+    };
   }
-}
+};
