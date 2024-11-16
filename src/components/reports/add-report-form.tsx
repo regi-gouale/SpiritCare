@@ -160,19 +160,12 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
             variant={"destructive"}
             className="rounded-full"
             onClick={() => {
-              router.push("/");
+              router.push(`/persons/${personId}`);
             }}
           >
             Annuler
           </Button>
-          <Button
-            type="submit"
-            className="rounded-full"
-            // onClick={() => {
-            //   console.log("submit");
-            //   onFormSubmit(form.getValues());
-            // }}
-          >
+          <Button type="submit" className="rounded-full">
             Ajouter le rapport
           </Button>
         </div>
