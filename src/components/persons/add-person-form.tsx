@@ -179,14 +179,13 @@ export const AddPersonForm = () => {
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
+                      date > new Date() || date < new Date("1920-01-01")
                     }
                     captionLayout={"dropdown"}
                     fromYear={1900}
                     toYear={new Date().getFullYear()}
                     defaultMonth={field.value || new Date()}
                     locale={fr}
-                    // initialFocus
                   />
                 </PopoverContent>
               </Popover>
