@@ -49,7 +49,7 @@ export default async function PersonIdPage(props: {
     <div className="h-full">
       <main>
         <div className="mx-auto my-10 flex w-full flex-col items-center justify-between space-y-8 p-10">
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full max-w-3xl items-center justify-between">
             <Link href="/">
               <ArrowLeftIcon className="size-8 cursor-pointer" />
             </Link>

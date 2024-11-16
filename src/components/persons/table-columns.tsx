@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,34 +16,34 @@ import Link from "next/link";
 import { formatPhoneNumber } from "react-phone-number-input";
 
 export const personsTableColumns: ColumnDef<Person>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomeRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all rows"
-        className="mr-2"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select this row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomeRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all rows"
+  //       className="mr-2"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select this row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     id: "Nom",
     accessorKey: "fullname",
     header: ({ column }) => (
-      <div className="flex items-center justify-start">
+      <div className="ml-4 flex items-center justify-start">
         <span className="font-lato text-sm font-semibold">Nom</span>
         <Button
           className="ml-0"
@@ -59,7 +58,7 @@ export const personsTableColumns: ColumnDef<Person>[] = [
       </div>
     ),
     cell: (row) => (
-      <div className="text-left font-epilogue text-sm">
+      <div className="ml-4 text-left font-epilogue text-sm">
         {row.getValue() as string}
       </div>
     ),
