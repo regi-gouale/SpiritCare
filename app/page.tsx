@@ -12,7 +12,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="h-full min-h-screen">
+    <div className="h-full">
       <main>
         <div className="mx-auto my-10 flex max-w-4xl items-center justify-between p-4">
           <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">

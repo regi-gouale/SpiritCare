@@ -30,9 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body
-        className={`${lato.variable} ${epilogue.variable} bg-neutral-50 antialiased`}
-      >
+      <body className={`${lato.variable} ${epilogue.variable} antialiased`}>
+        {/* <SidebarProvider> */}
+        {/* <Header /> */}
         <TooltipProvider>
           {modal}
           {children}
@@ -40,6 +40,7 @@ export default function RootLayout({
         <Toaster />
 
         <Footer />
+        {/* </SidebarProvider> */}
       </body>
     </html>
   );
