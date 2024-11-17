@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +13,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { ArrowLeftIcon, Eye, PenIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type PersonIdPageProps = Promise<{
   personId: string;
@@ -20,6 +22,12 @@ type PersonIdPageProps = Promise<{
 export default async function PersonIdPage(props: {
   params: PersonIdPageProps;
 }) {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const { personId } = await props.params;
 
   if (!personId) {

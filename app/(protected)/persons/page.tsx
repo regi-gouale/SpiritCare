@@ -1,10 +1,18 @@
+import { auth } from "@/auth";
 import { PersonsTable } from "@/components/persons/table";
 import { prisma } from "@/lib/prisma";
 import { Person } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const persons: Person[] = await prisma.person.findMany({
     orderBy: {
       lastname: "asc",

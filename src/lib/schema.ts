@@ -10,6 +10,7 @@ export const createPersonFormSchema = z.object({
   lastname: z.string({ required_error: "Le nom est requis" }).min(2, {
     message: "Le nom doit contenir au moins 2 caractères",
   }),
+  fullname: z.string().optional(),
   email: z
     .string({
       required_error: "L'email est requis",

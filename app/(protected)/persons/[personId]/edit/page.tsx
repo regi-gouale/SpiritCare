@@ -1,7 +1,9 @@
+import { auth } from "@/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type PersonIdEditPageProps = Promise<{
   personId: string;
@@ -10,6 +12,12 @@ type PersonIdEditPageProps = Promise<{
 export default async function PersonIdAddReportPage(props: {
   params: PersonIdEditPageProps;
 }) {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const { personId } = await props.params;
 
   if (!personId) {

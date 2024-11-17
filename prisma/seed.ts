@@ -16,18 +16,34 @@ async function main() {
     Status.RESPONSABLE,
     Status.STAR,
   ];
-  const people = Array.from({ length: 1000 }).map(() => ({
-    firstname: faker.person.firstName(),
-    lastname: faker.person.lastName(),
-    email: faker.internet.email(),
-    phone: faker.phone.number({ style: "international" }),
-    dateOfBirth: faker.date.birthdate(),
-    gender: genders[Math.floor(Math.random() * genders.length)],
-    status: roles[Math.floor(Math.random() * roles.length)],
-  }));
+
+  let peoples = [];
+  for (const i of Array.from({ length: 10 })) {
+    const gender = genders[Math.floor(Math.random() * genders.length)];
+    peoples.push({
+      firstname: faker.person.firstName(
+        gender.toLocaleLowerCase() as "male" | "female"
+      ),
+      lastname: faker.person.lastName(),
+      email: faker.internet.email().toLocaleLowerCase(),
+      phone: faker.phone.number({ style: "international" }),
+      dateOfBirth: faker.date.birthdate(),
+      gender,
+      status: roles[Math.floor(Math.random() * roles.length)],
+    });
+  }
+  // const people = Array.from({ length: 1000 }).map(() => ({
+  //   firstname: faker.person.firstName(),
+  //   lastname: faker.person.lastName(),
+  //   email: faker.internet.email(),
+  //   phone: faker.phone.number({ style: "international" }),
+  //   dateOfBirth: faker.date.birthdate(),
+  //   gender: genders[Math.floor(Math.random() * genders.length)],
+  //   status: roles[Math.floor(Math.random() * roles.length)],
+  // }));
 
   let peoplesCreated = [];
-  for (const person of people) {
+  for (const person of peoples) {
     peoplesCreated.push(
       await prisma.person.create({
         data: person,

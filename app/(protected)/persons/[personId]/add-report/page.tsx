@@ -40,13 +40,22 @@
 // }
 "use client";
 
+import { auth } from "@/auth";
 import { Modal } from "@/components/modal";
 import { AddReportForm } from "@/components/reports/add-report-form";
+import { useRouter } from "next/navigation";
 import { use } from "react";
 
 type AddReportPageProps = Promise<{ personId: string }>;
 
 export default function AddReportPage(props: { params: AddReportPageProps }) {
+  const session = auth().then((session) => session);
+  const router = useRouter();
+
+  if (!session) {
+    router.push("/login");
+  }
+
   const params = use(props.params);
   const personId = params.personId;
 

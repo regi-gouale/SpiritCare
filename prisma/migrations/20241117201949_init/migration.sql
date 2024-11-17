@@ -4,11 +4,15 @@ CREATE TYPE "Status" AS ENUM ('MEMBER', 'STAR', 'AIDE', 'ADMIN', 'RESPONSABLE', 
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
 
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'SUPERUSER', 'ADMIN');
+
 -- CreateTable
 CREATE TABLE "Person" (
     "id" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
+    "fullname" TEXT,
     "email" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
@@ -37,11 +41,12 @@ CREATE TABLE "Church" (
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "firstname" TEXT,
+    "lastname" TEXT,
     "email" TEXT,
-    "email_verified" TIMESTAMP(3),
+    "password" TEXT,
     "image" TEXT,
-    "role" "Status" NOT NULL DEFAULT 'MEMBER',
+    "role" "Role" NOT NULL DEFAULT 'USER',
     "personId" TEXT,
     "churchId" TEXT,
 

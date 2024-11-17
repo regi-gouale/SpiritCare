@@ -44,6 +44,7 @@ export const AddPersonForm = () => {
     defaultValues: {
       firstname: "",
       lastname: "",
+      fullname: "",
       email: "",
       phone: "",
       dateOfBirth: new Date("2000-01-01"),
