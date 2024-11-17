@@ -20,11 +20,14 @@ async function main() {
   let peoples = [];
   for (const i of Array.from({ length: 10 })) {
     const gender = genders[Math.floor(Math.random() * genders.length)];
+    const firstname = faker.person.firstName(
+      gender.toLocaleLowerCase() as "male" | "female"
+    );
+    const lastname = faker.person.lastName();
     peoples.push({
-      firstname: faker.person.firstName(
-        gender.toLocaleLowerCase() as "male" | "female"
-      ),
-      lastname: faker.person.lastName(),
+      firstname,
+      lastname,
+      fullname: `${firstname} ${lastname.toLocaleUpperCase()}`,
       email: faker.internet.email().toLocaleLowerCase(),
       phone: faker.phone.number({ style: "international" }),
       dateOfBirth: faker.date.birthdate(),
@@ -32,15 +35,6 @@ async function main() {
       status: roles[Math.floor(Math.random() * roles.length)],
     });
   }
-  // const people = Array.from({ length: 1000 }).map(() => ({
-  //   firstname: faker.person.firstName(),
-  //   lastname: faker.person.lastName(),
-  //   email: faker.internet.email(),
-  //   phone: faker.phone.number({ style: "international" }),
-  //   dateOfBirth: faker.date.birthdate(),
-  //   gender: genders[Math.floor(Math.random() * genders.length)],
-  //   status: roles[Math.floor(Math.random() * roles.length)],
-  // }));
 
   let peoplesCreated = [];
   for (const person of peoples) {

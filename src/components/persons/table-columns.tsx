@@ -39,7 +39,7 @@ export const personsTableColumns: ColumnDef<Person>[] = [
 
       return (
         <div className="ml-4 text-left font-epilogue text-sm">
-          {person.fullname}
+          {person.firstname} {person.lastname.toLocaleUpperCase()}
         </div>
       );
     },
