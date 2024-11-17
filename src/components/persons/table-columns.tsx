@@ -16,29 +16,6 @@ import Link from "next/link";
 import { formatPhoneNumber } from "react-phone-number-input";
 
 export const personsTableColumns: ColumnDef<Person>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomeRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all rows"
-  //       className="mr-2"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select this row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     id: "Nom",
     accessorKey: "fullname",
@@ -57,11 +34,15 @@ export const personsTableColumns: ColumnDef<Person>[] = [
         </Button>
       </div>
     ),
-    cell: (row) => (
-      <div className="ml-4 text-left font-epilogue text-sm">
-        {row.getValue() as string}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const person = row.original;
+
+      return (
+        <div className="ml-4 text-left font-epilogue text-sm">
+          {person.firstname} {person.lastname.toLocaleUpperCase()}
+        </div>
+      );
+    },
   },
   {
     id: "E-mail",

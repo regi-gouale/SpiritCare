@@ -67,7 +67,7 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full max-w-4xl space-y-4"
+        className="w-full max-w-4xl space-y-8"
       >
         <div className="space-y-8">
           <FormField

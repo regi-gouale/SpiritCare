@@ -1,9 +1,11 @@
+import { auth } from "@/auth";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type PersonIdPageProps = Promise<{
   personId: string;
@@ -13,6 +15,12 @@ type PersonIdPageProps = Promise<{
 export default async function PersonIdReportIdPage(props: {
   params: PersonIdPageProps;
 }) {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const { personId, reportId } = await props.params;
   const person = await prisma.person.findUnique({
     where: {

@@ -1,9 +1,18 @@
+import { auth } from "@/auth";
+import { PersonsTable } from "@/components/persons/table";
 import { prisma } from "@/lib/prisma";
 import { Person } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const persons: Person[] = await prisma.person.findMany({
     orderBy: {
       lastname: "asc",
@@ -15,7 +24,7 @@ export default async function Home() {
       <main>
         <div className="mx-auto my-10 flex max-w-4xl items-center justify-between p-4">
           <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">
-            Page d'accueil
+            Liste des membres
           </h1>
           <Link
             href={"/add-member"}
@@ -25,7 +34,7 @@ export default async function Home() {
             <span className="font-lato font-semibold">Membre</span>
           </Link>
         </div>
-        {/* <PersonsTable persons={JSON.parse(JSON.stringify(persons))} /> */}
+        <PersonsTable persons={JSON.parse(JSON.stringify(persons))} />
       </main>
     </div>
   );

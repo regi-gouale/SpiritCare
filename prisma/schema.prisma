@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -23,10 +24,17 @@ enum Gender {
   FEMALE
 }
 
+enum Role {
+  USER
+  SUPERUSER
+  ADMIN
+}
+
 model Person {
   id          String   @id @default(cuid())
   firstname   String
   lastname    String
+  fullname    String?
   email       String   @unique
   phone       String
   dateOfBirth DateTime
@@ -51,18 +59,19 @@ model Church {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  role          Status    @default(MEMBER)
-  accounts      Account[]
-  sessions      Session[]
-  Person        Person?   @relation(fields: [personId], references: [id])
-  personId      String?
-  Church        Church?   @relation(fields: [churchId], references: [id])
-  churchId      String?
+  id        String    @id @default(cuid())
+  firstname String?
+  lastname  String?
+  email     String?   @unique
+  password  String?
+  image     String?
+  role      Role      @default(USER)
+  accounts  Account[]
+  sessions  Session[]
+  Person    Person?   @relation(fields: [personId], references: [id])
+  personId  String?
+  Church    Church?   @relation(fields: [churchId], references: [id])
+  churchId  String?
   // Report        Report[]
 
   @@map("users")
