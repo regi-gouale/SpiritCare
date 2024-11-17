@@ -1,6 +1,5 @@
 "use client";
 
-// import { createReportAction } from "@/actions/report-actions";
 import { createReport } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -107,6 +106,8 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
                         date > new Date() || date < new Date("2023-01-01")
                       }
                       captionLayout="dropdown"
+                      fromYear={2020}
+                      toYear={new Date().getFullYear()}
                       defaultMonth={field.value || new Date()}
                       locale={fr}
                     />
@@ -125,19 +126,6 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
                 </FormLabel>
                 <FormControl>
                   <div>
-                    {/* <MinimalTiptapEditor
-                      {...field}
-                      value={field.value}
-                      onChange={field.onChange}
-                      className="w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      output="text"
-                      placeholder="Saisir le rapport de l'entretien ici..."
-                      autofocus={true}
-                      editable={true}
-                      editorContentClassName="overflow-auto min-h-72 max-h-72"
-                      editorClassName="p-2 min-h-72"
-                      immediatelyRender={false}
-                    /> */}
                     <Textarea
                       {...field}
                       className="w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -149,7 +137,6 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
                 <FormDescription className="text-muted-foreground">
                   Écrire le rapport de l'entretien, les observations, les notes.
                 </FormDescription>
-                {/* <div>{field.value}</div> */}
                 <FormMessage />
               </FormItem>
             )}

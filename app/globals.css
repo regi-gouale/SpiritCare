@@ -97,6 +97,10 @@
   @apply hidden;
 }
 
+select::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   * {
     @apply border-border;

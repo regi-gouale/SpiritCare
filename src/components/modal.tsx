@@ -8,8 +8,6 @@ import {
   DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useRouter } from "next/navigation";
 import {
   Drawer,
   DrawerContent,
@@ -17,7 +15,9 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerTitle,
-} from "./ui/drawer";
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useRouter } from "next/navigation";
 
 export type ModalProps = {
   children: React.ReactNode;

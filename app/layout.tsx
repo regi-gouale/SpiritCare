@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
@@ -28,13 +29,18 @@ export default function RootLayout({
   modal?: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning>
       <body className={`${lato.variable} ${epilogue.variable} antialiased`}>
+        {/* <SidebarProvider> */}
+        {/* <Header /> */}
         <TooltipProvider>
           {modal}
           {children}
         </TooltipProvider>
         <Toaster />
+
+        <Footer />
+        {/* </SidebarProvider> */}
       </body>
     </html>
   );
