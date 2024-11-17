@@ -50,7 +50,7 @@ export default async function PersonIdPage(props: {
       <main>
         <div className="mx-auto my-10 flex w-full flex-col items-center justify-between space-y-8 p-10">
           <div className="flex w-full max-w-3xl items-center justify-between">
-            <Link href="/">
+            <Link href="/persons">
               <ArrowLeftIcon className="size-8 cursor-pointer" />
             </Link>
             <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">
