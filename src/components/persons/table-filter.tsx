@@ -27,7 +27,7 @@ export const PersonsTableFilter = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" className="ml-auto rounded-full border">
-          Colonnes <ChevronDown />
+          Afficher <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
