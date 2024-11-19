@@ -18,5 +18,11 @@ export default async function AddReportPage(props: {
   if (!personId) {
     return <div>Loading</div>;
   }
-  return <AddReport personId={personId} userId={session.user?.id as string} />;
+  return (
+    <div className="h-full">
+      <main>
+        <AddReport personId={personId} userId={session.user?.id as string} />
+      </main>
+    </div>
+  );
 }
