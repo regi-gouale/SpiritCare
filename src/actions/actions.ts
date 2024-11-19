@@ -87,15 +87,10 @@ export const createReport = async (
 
 // Register user
 export const registerUser = async (formData: FormData) => {
-  console.log(formData);
   const firstname = formData.get("firstname") as string;
-  console.log(firstname);
   const lastname = formData.get("lastname") as string;
-  console.log(lastname);
   const email = formData.get("email") as string;
-  console.log(email);
   const password = formData.get("password") as string;
-  console.log(password);
 
   if (!firstname || !lastname || !email || !password) {
     console.error("Veuillez remplir tous les champs");
@@ -125,8 +120,6 @@ export const registerUser = async (formData: FormData) => {
       password: hashedPassword,
     },
   });
-
-  console.log(hashedPassword);
 
   redirect("/login");
 };

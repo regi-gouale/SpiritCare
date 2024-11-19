@@ -33,6 +33,7 @@ export const createPersonFormSchema = z.object({
 
 export const createReportFormSchema = z.object({
   personId: z.string(),
+  userId: z.string(),
   date: z.date({
     required_error: "La date est requise",
     invalid_type_error: "La date est invalide",

@@ -30,18 +30,19 @@ import { z } from "zod";
 import { Textarea } from "../ui/textarea";
 
 export type AddReportFormProps = {
-  // children: ReactNode;
   personId: string;
+  userId: string;
 };
 
-export const AddReportForm = ({ personId }: AddReportFormProps) => {
+export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof createReportFormSchema>>({
     resolver: zodResolver(createReportFormSchema),
     defaultValues: {
       personId,
+      userId,
       date: new Date(),
-      content: "",
+      content: ``,
     },
   });
 
@@ -152,7 +153,13 @@ export const AddReportForm = ({ personId }: AddReportFormProps) => {
           >
             Annuler
           </Button>
-          <Button type="submit" className="rounded-full">
+          <Button
+            type="submit"
+            className="rounded-full"
+            onClick={() => {
+              toast.info(`${JSON.stringify(form.getValues())}`);
+            }}
+          >
             Ajouter le rapport
           </Button>
         </div>

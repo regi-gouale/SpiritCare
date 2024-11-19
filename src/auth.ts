@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { compare } from "bcryptjs";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -44,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isMatch) {
           throw new Error("Invalid password");
         }
-
         return user;
       },
     }),
@@ -53,5 +53,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
     // signOut: "/login",
     // error: "/login",
+  },
+  // session: {
+  //   strategy: "jwt",
+  //   maxAge: 30 * 24 * 60 * 60,
+  //   updateAge: 24 * 60 * 60,
+  // },
+  callbacks: {
+    jwt({ user, token }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id as string;
+      session.user.role = token.role as Role;
+      return session;
+    },
   },
 });

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { Gender } from "@prisma/client";
+import { Gender, Role } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { ArrowLeftIcon, Eye, PenIcon, PlusIcon } from "lucide-react";
@@ -44,14 +44,28 @@ export default async function PersonIdPage(props: {
     return <div>Person not found</div>;
   }
 
-  const reports = await prisma.report.findMany({
-    where: {
-      personId: personId,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
+  // Get reports of the person only if user role is not "USER" or the report is created by the user
+  let reports = [];
+  if (session.user.role === Role.USER) {
+    reports = await prisma.report.findMany({
+      where: {
+        personId: personId,
+        userId: session.user.id,
+      },
+      orderBy: {
+        date: "desc",
+      },
+    });
+  } else {
+    reports = await prisma.report.findMany({
+      where: {
+        personId: personId,
+      },
+      orderBy: {
+        date: "desc",
+      },
+    });
+  }
 
   return (
     <div className="h-full">

@@ -72,7 +72,7 @@ model User {
   personId  String?
   Church    Church?   @relation(fields: [churchId], references: [id])
   churchId  String?
-  // Report        Report[]
+  Report    Report[]
 
   @@map("users")
 }
@@ -120,8 +120,8 @@ model Report {
   id        String   @id @default(cuid())
   content   String
   date      DateTime
-  // User      User     @relation(fields: [userId], references: [id])
-  // userId    String
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
   person    Person   @relation(fields: [personId], references: [id])
   personId  String
   createdAt DateTime @default(now())

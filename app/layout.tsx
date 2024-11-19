@@ -35,8 +35,8 @@ export default function RootLayout({
         <TooltipProvider>
           {modal}
           {children}
+          <Toaster />
         </TooltipProvider>
-        <Toaster />
 
         {/* <Footer /> */}
         {/* </SidebarProvider> */}
