@@ -84,7 +84,7 @@ export const Header: React.FC = async () => {
           </div>
         </Link>
         <nav className="flex-col hidden gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-base lg:gap-6">
-          <Link href={"/persons"} className="font-bold">
+          <Link href={"/persons"} className="">
             Liste des membres
           </Link>
           {/* <Link href={"/products"} className="text-muted-foreground">

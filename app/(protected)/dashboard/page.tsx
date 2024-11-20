@@ -57,7 +57,7 @@ async function getRecentReports(userId: string): Promise<ReportWithMember[]> {
     },
     take: 5,
     orderBy: {
-      createdAt: "desc",
+      date: "desc",
     },
   })) as unknown as Report[];
 

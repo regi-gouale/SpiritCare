@@ -1,6 +1,7 @@
 "use client";
 
 import { createReport } from "@/actions/actions";
+import { Editor, EditorContainer } from "@/components/plate-ui/editor";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -20,6 +21,14 @@ import {
 import { createReportFormSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  BoldPlugin,
+  ItalicPlugin,
+  UnderlinePlugin,
+} from "@udecode/plate-basic-marks/react";
+import { BlockquotePlugin } from "@udecode/plate-block-quote/react";
+import { Plate, usePlateEditor } from "@udecode/plate-common/react";
+import { HeadingPlugin } from "@udecode/plate-heading/react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
@@ -27,7 +36,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Textarea } from "../ui/textarea";
 
 export type AddReportFormProps = {
   personId: string;
@@ -63,6 +71,28 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
       router.push(`/persons/${personId}`);
     } else toast.error(response.error);
   }
+
+  const value = [
+    {
+      type: "p",
+      children: [
+        {
+          text: "This is editable plain text with react and history plugins, just like a <textarea>!",
+        },
+      ],
+    },
+  ];
+
+  const editor = usePlateEditor({
+    plugins: [
+      HeadingPlugin,
+      BlockquotePlugin,
+      BoldPlugin,
+      ItalicPlugin,
+      UnderlinePlugin,
+    ],
+    value,
+  });
 
   return (
     <Form {...form}>
@@ -126,13 +156,37 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
                   Rapport
                 </FormLabel>
                 <FormControl>
-                  <div>
-                    <Textarea
+                  <div className="border p-0 rounded-xl">
+                    {/* <Textarea
                       {...field}
                       className="w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       placeholder="Saisir le rapport de l'entretien ici..."
                       rows={16}
-                    />
+                    /> */}
+                    <Plate
+                      editor={editor}
+                      onChange={({ value }) => {
+                        // field.onChange(value);
+                      }}
+                    >
+                      <EditorContainer>
+                        <Editor
+                          // {...field}
+                          placeholder="Saisir le rapport de l'entretien ici..."
+                          // rows={16}
+                          // value={field.value}
+                          // onChange={field.onChange}
+                        />
+                      </EditorContainer>
+                      {/* <PlateContent
+                        {...field}
+                        placeholder="Saisir le rapport de l'entretien ici..."
+                        rows={16}
+                        value={field.value}
+                        onChange={field.onChange}
+                      /> */}
+                    </Plate>
+                    <div>{field.value}</div>
                   </div>
                 </FormControl>
                 <FormDescription className="text-muted-foreground">
