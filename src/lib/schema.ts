@@ -43,5 +43,9 @@ export const createReportFormSchema = z.object({
       required_error: "Le contenu est requis",
       message: "Le contenu doit contenir au moins 10 caractères",
     })
-    .min(10, "Le contenu doit contenir au moins 10 caractères"),
+    .min(10, "Le contenu doit contenir au moins 10 caractères")
+    .trim(),
+  reason: z
+    .string()
+    .min(5, "La raison de l'entretien doit contenir au moins 5 caractères"),
 });

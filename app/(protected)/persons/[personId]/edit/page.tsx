@@ -138,7 +138,7 @@ export default async function PersonIdAddReportPage(props: {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full text-left font-normal font-epilogue rounded-full col-span-3",
+                          "w-full text-left font-normal font-epilogue rounded-xl col-span-3",
                           !person.dateOfBirth && "text-muted-foreground"
                         )}
                       >

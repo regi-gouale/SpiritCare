@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Tiptap } from "@/components/tiptap";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
@@ -28,7 +29,7 @@ export default async function PersonIdReportIdPage(props: {
     },
   });
   if (!person) {
-    return <div>Person not found</div>;
+    return <div>Aucune personne trouvée.</div>;
   }
   const report = await prisma.report.findUnique({
     where: {
@@ -36,7 +37,7 @@ export default async function PersonIdReportIdPage(props: {
     },
   });
   if (!report) {
-    return <div>Report not found</div>;
+    return <div>Aucun rapport pour cette personne.</div>;
   }
 
   return (
@@ -68,8 +69,9 @@ export default async function PersonIdReportIdPage(props: {
               <span className="font-lato text-xl font-semibold">
                 Notes de l'entretien :{" "}
               </span>
-              <span className="text-justify font-epilogue text-base">
-                {report.content}
+              <span className="w-full text-justify font-epilogue text-base">
+                {/* {report.content} */}
+                <Tiptap description={report.content} />
               </span>
             </div>
           </CardContent>

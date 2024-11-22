@@ -50,7 +50,7 @@ export const PersonsTablePagination = ({
       <div className="ml-auto flex items-center space-x-2">
         <Button
           variant="outline"
-          className="hidden rounded-full p-0 lg:flex"
+          className="hidden rounded-xl p-0 lg:flex"
           size={"icon"}
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
@@ -61,7 +61,7 @@ export const PersonsTablePagination = ({
         </Button>
         <Button
           variant="outline"
-          className="rounded-full p-0"
+          className="rounded-xl p-0"
           size={"icon"}
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
@@ -71,7 +71,7 @@ export const PersonsTablePagination = ({
         </Button>
         <Button
           variant="outline"
-          className="rounded-full p-0"
+          className="rounded-xl p-0"
           size={"icon"}
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
@@ -81,7 +81,7 @@ export const PersonsTablePagination = ({
         </Button>
         <Button
           variant="outline"
-          className="hidden rounded-full p-0 lg:flex"
+          className="hidden rounded-xl p-0 lg:flex"
           size={"icon"}
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}

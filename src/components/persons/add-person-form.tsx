@@ -89,7 +89,7 @@ export const AddPersonForm = () => {
                   <Input
                     placeholder="Prénom"
                     {...field}
-                    className="rounded-full"
+                    className="rounded-xl"
                   />
                 </FormControl>
                 <FormMessage />
@@ -103,11 +103,7 @@ export const AddPersonForm = () => {
               <FormItem>
                 {/* <FormLabel>Nom</FormLabel> */}
                 <FormControl>
-                  <Input
-                    placeholder="Nom"
-                    {...field}
-                    className="rounded-full"
-                  />
+                  <Input placeholder="Nom" {...field} className="rounded-xl" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,11 +117,7 @@ export const AddPersonForm = () => {
             <FormItem>
               {/* <FormLabel>Nom</FormLabel> */}
               <FormControl>
-                <Input
-                  placeholder="E-mail"
-                  {...field}
-                  className="rounded-full"
-                />
+                <Input placeholder="E-mail" {...field} className="rounded-xl" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,7 +132,7 @@ export const AddPersonForm = () => {
                 <PhoneInput
                   placeholder="+33 6 12 34 57 89"
                   {...field}
-                  className="rounded-full"
+                  className="rounded-xl"
                 />
               </FormControl>
               <FormMessage />
@@ -161,7 +153,7 @@ export const AddPersonForm = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full text-left font-normal font-epilogue rounded-full col-span-3",
+                        "w-full text-left font-normal font-epilogue rounded-xl col-span-3",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -204,7 +196,7 @@ export const AddPersonForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="rounded-full">
+                    <SelectTrigger className="rounded-xl">
                       <SelectValue placeholder="Choisir un sexe" />
                     </SelectTrigger>
                   </FormControl>
@@ -226,7 +218,7 @@ export const AddPersonForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="rounded-full">
+                    <SelectTrigger className="rounded-xl">
                       <SelectValue placeholder="Choisir un sexe" />
                     </SelectTrigger>
                   </FormControl>
@@ -251,7 +243,7 @@ export const AddPersonForm = () => {
         </div>
         <div className="grid grid-cols-2 space-x-4">
           <div></div>
-          <Button type="submit" className="rounded-full">
+          <Button type="submit" className="rounded-xl">
             Ajouter
           </Button>
         </div>

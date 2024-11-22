@@ -23,7 +23,7 @@ export default async function RegisterPage() {
   }
 
   return (
-    <Card className="mx-auto my-10 size-full max-w-xl rounded-2xl bg-background p-4 shadow-inner md:p-8">
+    <Card className="mx-auto my-10 size-full max-w-2xl rounded-xl bg-background p-4 shadow-inner md:p-8">
       <CardHeader>
         <CardTitle className="text-center font-lato text-xl font-medium md:text-2xl xl:text-3xl">
           Bienvenue sur <span className="font-semibold">Spirit</span>
@@ -43,7 +43,7 @@ export default async function RegisterPage() {
                 placeholder="John"
                 type="text"
                 name="firstname"
-                className="rounded-full"
+                className="rounded-xl"
               />
             </div>
             <div className="flex w-full flex-col space-y-2">
@@ -53,7 +53,7 @@ export default async function RegisterPage() {
                 placeholder="Doe"
                 type="text"
                 name="lastname"
-                className="rounded-full"
+                className="rounded-xl"
               />
             </div>
           </div>
@@ -64,7 +64,7 @@ export default async function RegisterPage() {
               placeholder="john.doe@mail.com"
               type="email"
               name="email"
-              className="rounded-full"
+              className="rounded-xl"
             />
           </div>
           <div className="space-y-2 font-lato">
@@ -74,12 +74,12 @@ export default async function RegisterPage() {
               placeholder="********"
               type="password"
               name="password"
-              className="rounded-full"
+              className="rounded-xl"
             />
           </div>
           <Button
             type="submit"
-            className="mt-8 w-full rounded-full font-lato text-lg font-semibold"
+            className="mt-8 w-full rounded-xl font-lato text-lg font-semibold"
           >
             S'inscrire
             <ArrowRightIcon className="ml-2" />

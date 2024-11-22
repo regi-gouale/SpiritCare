@@ -81,7 +81,7 @@ export default async function PersonIdPage(props: {
             <Link href={`/persons/${personId}/add-report`}>
               <Button
                 variant="default"
-                className="rounded-full font-lato font-semibold"
+                className="rounded-xl font-lato font-semibold"
               >
                 <PlusIcon className="size-4" />
                 Rapport
@@ -95,7 +95,7 @@ export default async function PersonIdPage(props: {
                 <Link href={`/persons/${personId}/edit`}>
                   <Button
                     variant="secondary"
-                    className="cursor-pointer rounded-full"
+                    className="cursor-pointer rounded-xl"
                   >
                     <PenIcon className="size-3" />
                     <span className="font-lato font-semibold">Modifier</span>
@@ -169,7 +169,7 @@ export default async function PersonIdPage(props: {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="rounded-full"
+                            className="rounded-xl"
                           >
                             <Eye className="size-4 cursor-pointer" />
                           </Button>
@@ -177,7 +177,7 @@ export default async function PersonIdPage(props: {
                         {/* <Button
                           variant="outline"
                           size="icon"
-                          className="rounded-full"
+                          className="rounded-xl"
                         >
                           <TrashIcon className="size-4 cursor-pointer" />
                         </Button> */}

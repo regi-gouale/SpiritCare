@@ -140,12 +140,12 @@ export default async function Component() {
               />
             </div>
           </form>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button variant="ghost" size="icon" className="rounded-xl">
             <img
               src="/placeholder.svg"
               width="32"
               height="32"
-              className="rounded-full"
+              className="rounded-xl"
               alt="Avatar"
               style={{ aspectRatio: "32/32", objectFit: "cover" }}
             />

@@ -65,6 +65,7 @@ export const createReport = async (
   data: z.infer<typeof createReportFormSchema>
 ) => {
   try {
+    console.log("data from createReport", data);
     const reportCreated = await prisma.report.create({
       data: data,
     });
@@ -75,11 +76,15 @@ export const createReport = async (
       error: null,
       data: JSON.parse(JSON.stringify(reportCreated)),
     };
-  } catch {
-    console.error("Une erreur est survenue lors de la création du rapport");
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de la création du rapport",
+      error
+    );
     return {
       ok: false,
-      error: "Une erreur est survenue lors de la création du rapport",
+      error:
+        `Une erreur est survenue lors de la création du rapport. ${error}`.trim(),
       data: null,
     };
   }
