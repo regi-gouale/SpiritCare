@@ -22,19 +22,19 @@ export default async function LoginPage() {
     redirect("/dashboard");
   }
   return (
-    <Card className="my-10 max-w-xl size-full mx-auto rounded-2xl p-4 md:p-8 shadow-inner bg-background">
+    <Card className="mx-auto my-10 size-full max-w-xl rounded-2xl bg-background p-4 shadow-inner md:p-8">
       <CardHeader>
-        <CardTitle className="text-xl font-medium text-center font-lato md:text-2xl xl:text-3xl">
+        <CardTitle className="text-center font-lato text-xl font-medium md:text-2xl xl:text-3xl">
           Bienvenue sur <span className="font-semibold">Spirit</span>
-          <span className="text-primary font-black">Care</span>
+          <span className="font-black text-primary">Care</span>
         </CardTitle>
-        <CardDescription className="font-epilogue mt-8">
+        <CardDescription className="mt-8 font-epilogue">
           Remplissez toutes les informations réquises s'il vous plait.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" action={loginUser}>
-          <div className="font-lato space-y-2">
+          <div className="space-y-2 font-lato">
             <Label htmlFor="email">Adresse e-mail</Label>
             <Input
               id="email"
@@ -44,7 +44,7 @@ export default async function LoginPage() {
               className="rounded-full"
             />
           </div>
-          <div className="font-lato space-y-2">
+          <div className="space-y-2 font-lato">
             <Label htmlFor="password">Mot de passe</Label>
             <Input
               id="password"
@@ -56,7 +56,7 @@ export default async function LoginPage() {
           </div>
           <Button
             type="submit"
-            className="font-lato w-full mt-8 rounded-full text-lg font-semibold"
+            className="mt-8 w-full rounded-full font-lato text-lg font-semibold"
           >
             Se connecter
             <ArrowRightIcon className="ml-2" />
@@ -64,9 +64,9 @@ export default async function LoginPage() {
         </form>
       </CardContent>
       <CardFooter>
-        <CardDescription className="font-epilogue text-center">
+        <CardDescription className="text-center font-epilogue">
           Vous n'avez pas de compte ?{" "}
-          <Link href="/register" className="text-primary font-semibold">
+          <Link href="/register" className="font-semibold text-primary">
             Inscrivez-vous
           </Link>
         </CardDescription>

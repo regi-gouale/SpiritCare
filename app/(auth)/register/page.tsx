@@ -23,20 +23,20 @@ export default async function RegisterPage() {
   }
 
   return (
-    <Card className="my-10 max-w-xl size-full mx-auto rounded-2xl p-4 md:p-8 shadow-inner bg-background">
+    <Card className="mx-auto my-10 size-full max-w-xl rounded-2xl bg-background p-4 shadow-inner md:p-8">
       <CardHeader>
-        <CardTitle className="text-xl font-medium text-center font-lato md:text-2xl xl:text-3xl">
+        <CardTitle className="text-center font-lato text-xl font-medium md:text-2xl xl:text-3xl">
           Bienvenue sur <span className="font-semibold">Spirit</span>
-          <span className="text-primary font-black">Care</span>
+          <span className="font-black text-primary">Care</span>
         </CardTitle>
-        <CardDescription className="font-epilogue mt-4">
+        <CardDescription className="mt-4 font-epilogue">
           Remplissez toutes les informations réquises s'il vous plait.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" action={registerUser}>
-          <div className="font-lato flex w-full justify-between flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4 md:items-center">
-            <div className="flex flex-col w-full space-y-2">
+          <div className="mb-4 flex w-full flex-col justify-between space-y-2 font-lato md:flex-row md:items-center md:space-x-2 md:space-y-0">
+            <div className="flex w-full flex-col space-y-2">
               <Label htmlFor="firstname">Prénom</Label>
               <Input
                 id="firstname"
@@ -46,7 +46,7 @@ export default async function RegisterPage() {
                 className="rounded-full"
               />
             </div>
-            <div className="flex flex-col w-full space-y-2">
+            <div className="flex w-full flex-col space-y-2">
               <Label htmlFor="lastname">Nom</Label>
               <Input
                 id="lastname"
@@ -57,7 +57,7 @@ export default async function RegisterPage() {
               />
             </div>
           </div>
-          <div className="font-lato space-y-2">
+          <div className="space-y-2 font-lato">
             <Label htmlFor="email">Adresse e-mail</Label>
             <Input
               id="email"
@@ -67,7 +67,7 @@ export default async function RegisterPage() {
               className="rounded-full"
             />
           </div>
-          <div className="font-lato space-y-2">
+          <div className="space-y-2 font-lato">
             <Label htmlFor="password">Mot de passe</Label>
             <Input
               id="password"
@@ -79,7 +79,7 @@ export default async function RegisterPage() {
           </div>
           <Button
             type="submit"
-            className="font-lato w-full mt-8 rounded-full text-lg font-semibold"
+            className="mt-8 w-full rounded-full font-lato text-lg font-semibold"
           >
             S'inscrire
             <ArrowRightIcon className="ml-2" />
@@ -87,9 +87,9 @@ export default async function RegisterPage() {
         </form>
       </CardContent>
       <CardFooter>
-        <CardDescription className="font-epilogue text-center">
+        <CardDescription className="text-center font-epilogue">
           Vous avez déjà un compte ?{" "}
-          <Link href="/login" className="text-primary font-semibold">
+          <Link href="/login" className="font-semibold text-primary">
             Connectez-vous
           </Link>
         </CardDescription>

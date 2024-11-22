@@ -1,7 +1,19 @@
 import { auth } from "@/auth";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { prisma } from "@/lib/prisma";
-import { ArrowLeftIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { ArrowLeftIcon, CalendarIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -55,9 +67,11 @@ export default async function PersonIdAddReportPage(props: {
             </CardHeader>
             <CardContent>
               <form className="space-y-4">
-                <div className="space-y-2">
-                  <label htmlFor="firstname">Prénom</label>
-                  <input
+                <div className="flex flex-col items-start justify-center space-y-2 lg:flex-row lg:items-center">
+                  <Label htmlFor="firstname" className="lg:w-48">
+                    Prénom
+                  </Label>
+                  <Input
                     type="text"
                     id="firstname"
                     name="firstname"
@@ -65,9 +79,11 @@ export default async function PersonIdAddReportPage(props: {
                     defaultValue={person.firstname}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="lastname">Nom</label>
-                  <input
+                <div className="flex flex-col items-start justify-center space-y-2 lg:flex-row lg:items-center">
+                  <Label htmlFor="lastname" className="lg:w-48">
+                    Nom
+                  </Label>
+                  <Input
                     type="text"
                     id="lastname"
                     name="lastname"
@@ -75,9 +91,11 @@ export default async function PersonIdAddReportPage(props: {
                     defaultValue={person.lastname}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="email">Email</label>
-                  <input
+                <div className="flex flex-col items-start justify-center space-y-2 lg:flex-row lg:items-center">
+                  <Label htmlFor="email" className="lg:w-48">
+                    Email
+                  </Label>
+                  <Input
                     type="email"
                     id="email"
                     name="email"
@@ -85,25 +103,73 @@ export default async function PersonIdAddReportPage(props: {
                     defaultValue={person.email}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="phone">Téléphone</label>
-                  <input
+                <div className="flex flex-col items-start justify-center space-y-2 lg:flex-row lg:items-center">
+                  <Label htmlFor="phone" className="lg:w-48">
+                    Téléphone
+                  </Label>
+                  {/* <Input
                     type="text"
                     id="phone"
                     name="phone"
                     className="w-full"
                     defaultValue={person.phone}
-                  />
+                  /> */}
+                  {/* <PhoneInput
+                    placeholder="+33 6 12 34 57 89"
+                    id="phone"
+                    name="phone"
+                    className="w-full"
+                    defaultValue={person.phone}
+                  /> */}
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="dateOfBirth">Date de naissance</label>
-                  <input
+                <div className="flex flex-col items-start justify-center space-y-2 lg:flex-row lg:items-center">
+                  <Label htmlFor="dateOfBirth" className="lg:w-48">
+                    Date de naissance
+                  </Label>
+                  {/* <Input
                     type="date"
                     id="dateOfBirth"
                     name="dateOfBirth"
                     className="w-full"
                     defaultValue={person.dateOfBirth.toDateString()}
-                  />
+                  /> */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full text-left font-normal font-epilogue rounded-full col-span-3",
+                          !person.dateOfBirth && "text-muted-foreground"
+                        )}
+                      >
+                        {person.dateOfBirth ? (
+                          format(person.dateOfBirth, "PPP", { locale: fr })
+                        ) : (
+                          <span>Choisir une date</span>
+                        )}
+                        <CalendarIcon className="ml-auto size-4 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={person.dateOfBirth}
+                        onSelect={(date) => {
+                          if (date) {
+                            person.dateOfBirth = date;
+                          }
+                        }}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1920-01-01")
+                        }
+                        captionLayout={"dropdown"}
+                        fromYear={1900}
+                        toYear={new Date().getFullYear()}
+                        defaultMonth={person.dateOfBirth || new Date()}
+                        locale={fr}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </form>
             </CardContent>

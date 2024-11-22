@@ -100,7 +100,7 @@ export default async function Component() {
   const recentReports = await getRecentReports(session.user.id);
 
   return (
-    <div className="flex flex-col w-full min-h-screen" suppressHydrationWarning>
+    <div className="flex min-h-screen w-full flex-col" suppressHydrationWarning>
       {/* <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
         <nav className="flex-col hidden gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
@@ -156,10 +156,10 @@ export default async function Component() {
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="font-medium">Membres de l'église</CardTitle>
             </CardHeader>
-            <CardContent className="flex items-start flex-col">
+            <CardContent className="flex flex-col items-start">
               <div className="text-2xl font-bold">{getNumberOfMembers()}</div>
               <div className="text-sm text-muted-foreground">
                 Dont {getNumberOfMembersCreatedThisMonth()} ce mois
@@ -167,26 +167,26 @@ export default async function Component() {
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Rapports d'entretiens
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex items-start flex-col">
+            <CardContent className="flex flex-col items-start">
               <div className="text-2xl font-bold">{getNumberOfReports()}</div>
-              <div className="text-muted-foreground text-sm">
+              <div className="text-sm text-muted-foreground">
                 Mes rapports : {getNumberOfMyReports(session.user.id)}
               </div>
             </CardContent>
           </Card>
         </div>
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-xl font-medium">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="ml-4 text-xl font-medium">
               Mes derniers rapports
             </CardTitle>
             <div>
-              <div className="rounded-md w-8 h-8 flex items-center justify-center">
+              <div className="flex size-8 items-center justify-center rounded-md">
                 <span className="sr-only">Toggle menu</span>
               </div>
             </div>
