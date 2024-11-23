@@ -55,7 +55,7 @@ export const Header: React.FC = async () => {
             href={`/dashboard/${user.churchId}/persons`}
             className="align-bottom font-lato hover:font-semibold hover:text-primary"
           >
-            Liste des membres
+            Membres
           </Link>
         </nav>
       </div>

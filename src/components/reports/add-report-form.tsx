@@ -34,9 +34,14 @@ import { Input } from "../ui/input";
 export type AddReportFormProps = {
   personId: string;
   userId: string;
+  churchId: string;
 };
 
-export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
+export const AddReportForm = ({
+  personId,
+  userId,
+  churchId,
+}: AddReportFormProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof createReportFormSchema>>({
     mode: "onChange",
@@ -44,6 +49,7 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
     defaultValues: {
       personId,
       userId,
+      churchId,
       date: new Date(),
       reason: ``,
       content: ``,

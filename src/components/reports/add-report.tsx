@@ -7,9 +7,10 @@ import { SessionProvider } from "next-auth/react";
 type AddReportProps = {
   personId: string;
   userId: string;
+  churchId: string;
 };
 
-export const AddReport = ({ personId, userId }: AddReportProps) => {
+export const AddReport = ({ personId, userId, churchId }: AddReportProps) => {
   return (
     <Card className="mx-4 my-16 flex max-w-4xl flex-1 flex-col items-center justify-center rounded-xl p-10 sm:mx-8 lg:mx-auto">
       <CardHeader className="mb-10">
@@ -17,7 +18,11 @@ export const AddReport = ({ personId, userId }: AddReportProps) => {
       </CardHeader>
 
       <SessionProvider>
-        <AddReportForm personId={personId} userId={userId} />
+        <AddReportForm
+          personId={personId}
+          userId={userId}
+          churchId={churchId}
+        />
       </SessionProvider>
     </Card>
   );

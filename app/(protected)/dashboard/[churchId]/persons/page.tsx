@@ -14,6 +14,9 @@ export default async function Home() {
   }
 
   const persons: Person[] = await prisma.person.findMany({
+    where: {
+      churchId: session.user.churchId,
+    },
     orderBy: {
       lastname: "asc",
     },
@@ -24,7 +27,7 @@ export default async function Home() {
       <main>
         <div className="mx-auto my-10 flex max-w-4xl items-center justify-between p-4">
           <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">
-            Liste des membres
+            Membres
           </h1>
           <Link
             href={"/add-member"}

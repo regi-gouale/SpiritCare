@@ -21,7 +21,11 @@ export default async function AddReportPage(props: {
   return (
     <div className="h-full">
       <main>
-        <AddReport personId={personId} userId={session.user?.id as string} />
+        <AddReport
+          personId={personId}
+          userId={session.user.id}
+          churchId={session.user.churchId}
+        />
       </main>
     </div>
   );
