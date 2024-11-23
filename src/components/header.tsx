@@ -28,6 +28,11 @@ export const Header: React.FC = async () => {
   }
   const user = session.user as User;
 
+  // console.log(user);
+  if (!user.churchId) {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 mx-10 flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-background px-4">
       <div className="flex items-center gap-4">
@@ -47,7 +52,7 @@ export const Header: React.FC = async () => {
             Accueil
           </Link>
           <Link
-            href={"/persons"}
+            href={`/dashboard/${user.churchId}/persons`}
             className="align-bottom font-lato hover:font-semibold hover:text-primary"
           >
             Liste des membres
@@ -62,7 +67,6 @@ export const Header: React.FC = async () => {
               <Avatar className="size-8">
                 <AvatarFallback className="bg-primary font-lato text-xl font-black text-primary-foreground">
                   {user.firstname?.charAt(0).toLocaleUpperCase()}
-                  {/* {user.lastname?.charAt(0).toLocaleUpperCase()} */}
                 </AvatarFallback>
               </Avatar>
             </Button>

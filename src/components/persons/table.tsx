@@ -88,7 +88,7 @@ export const PersonsTable = ({ persons }: PersonsTableProps) => {
                     <TableCell
                       key={cell.id}
                       onClick={() => {
-                        window.location.href = `/persons/${row.original.id}`;
+                        window.location.href = `/dashboard/${row.original.churchId}/persons/${row.original.id}`;
                       }}
                     >
                       {flexRender(

@@ -29,6 +29,7 @@ export const createPersonFormSchema = z.object({
   }),
   gender: z.nativeEnum(Gender),
   status: z.nativeEnum(Status),
+  churchId: z.string(),
 });
 
 export const createReportFormSchema = z.object({
@@ -48,4 +49,25 @@ export const createReportFormSchema = z.object({
   reason: z
     .string()
     .min(5, "La raison de l'entretien doit contenir au moins 5 caractères"),
+});
+
+export const createChurchFormSchema = z.object({
+  name: z.string({ required_error: "Le nom de l'église est requis" }).min(2, {
+    message: "Le nom doit contenir au moins 2 caractères",
+  }),
+  address: z.string({ required_error: "L'adresse est requise" }).min(2, {
+    message: "L'adresse doit contenir au moins 2 caractères",
+  }),
+  city: z.string({ required_error: "La ville est requise" }).min(2, {
+    message: "La ville doit contenir au moins 2 caractères",
+  }),
+  country: z.string({ required_error: "Le pays est requis" }).min(2, {
+    message: "Le pays doit contenir au moins 2 caractères",
+  }),
+});
+
+export const joinChurchFormSchema = z.object({
+  joinCode: z
+    .string({ required_error: "Le code de l'église est requis" })
+    .min(6, { message: "Le code doit contenir au moins 6 caractères" }),
 });

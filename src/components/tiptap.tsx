@@ -47,7 +47,7 @@ export function Tiptap({
     editable: onChange ? true : false,
     onUpdate({ editor }) {
       onChange?.(editor.getHTML());
-      console.log(editor.getHTML());
+      // console.log(editor.getHTML());
     },
   });
 

@@ -143,4 +143,15 @@ model Report {
   personId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  // type      ReportType @default(ENTRETIEN)
 }
+
+// enum ReportType {
+//   ENTRETIEN
+//   CONSEIL
+//   PRIERE
+//   SUIVI
+//   INTEGRATION
+//   DEPART
+//   CLINIQUE
+// }

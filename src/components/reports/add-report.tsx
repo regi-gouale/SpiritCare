@@ -2,6 +2,7 @@
 
 import { AddReportForm } from "@/components/reports/add-report-form";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { SessionProvider } from "next-auth/react";
 
 type AddReportProps = {
   personId: string;
@@ -15,7 +16,9 @@ export const AddReport = ({ personId, userId }: AddReportProps) => {
         <CardTitle className="font-lato text-2xl">Ajouter un rapport</CardTitle>
       </CardHeader>
 
-      <AddReportForm personId={personId} userId={userId} />
+      <SessionProvider>
+        <AddReportForm personId={personId} userId={userId} />
+      </SessionProvider>
     </Card>
   );
 };

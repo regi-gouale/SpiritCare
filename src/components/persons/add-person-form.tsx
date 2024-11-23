@@ -32,12 +32,15 @@ import { Gender, Status } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 export const AddPersonForm = () => {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const form = useForm<z.infer<typeof createPersonFormSchema>>({
     resolver: zodResolver(createPersonFormSchema),
@@ -50,10 +53,19 @@ export const AddPersonForm = () => {
       dateOfBirth: new Date("2000-01-01"),
       gender: Gender.MALE,
       status: Status.MEMBER,
+      churchId: "",
     },
   });
 
+  if (!session) return null;
+
   async function onSubmit(data: z.infer<typeof createPersonFormSchema>) {
+    const churchId = session?.user.churchId;
+    if (!churchId) {
+      toast.error("Vous devez rejoindre une église pour ajouter un membre");
+      router.push("/churches/join");
+    }
+    data.churchId = churchId!;
     const result = createPersonFormSchema.safeParse(data);
 
     if (!result.success) {

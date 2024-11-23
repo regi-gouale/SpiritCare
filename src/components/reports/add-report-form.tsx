@@ -24,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -48,6 +49,11 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
       content: ``,
     },
   });
+  // const { data: session } = useSession();
+
+  // if (!session) {
+  //   return null;
+  // }
 
   async function onSubmit(data: z.infer<typeof createReportFormSchema>) {
     const result = createReportFormSchema.safeParse(data);
@@ -67,7 +73,11 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
       toast.success(`Rapport du ${response.data.date} ajouté avec succès`);
 
       form.reset();
-      router.push(`/persons/${personId}`);
+      // if (!session?.user.churchId) {
+      //   router.push("/dashboard");
+      // }
+      // router.push(`dashboard/${session?.user.churchId}/persons/${personId}`);
+      router.back();
     } else toast.error(response.error);
   }
 

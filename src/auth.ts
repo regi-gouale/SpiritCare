@@ -29,6 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: true,
             password: true,
             role: true,
+            churchId: true,
           },
         });
 
@@ -67,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.email = user.email;
         token.firstname = user.firstname;
         token.lastname = user.lastname;
+        token.churchId = user.churchId;
       }
       return token;
     },
@@ -76,6 +78,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email as string;
       session.user.firstname = token.firstname as string;
       session.user.lastname = token.lastname as string;
+      session.user.churchId = token.churchId as string;
       return session;
     },
   },
