@@ -32,12 +32,15 @@ import { Gender, Status } from "@prisma/client";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 export const AddPersonForm = () => {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const form = useForm<z.infer<typeof createPersonFormSchema>>({
     resolver: zodResolver(createPersonFormSchema),
@@ -50,10 +53,19 @@ export const AddPersonForm = () => {
       dateOfBirth: new Date("2000-01-01"),
       gender: Gender.MALE,
       status: Status.MEMBER,
+      churchId: "",
     },
   });
 
+  if (!session) return null;
+
   async function onSubmit(data: z.infer<typeof createPersonFormSchema>) {
+    const churchId = session?.user.churchId;
+    if (!churchId) {
+      toast.error("Vous devez rejoindre une église pour ajouter un membre");
+      router.push("/churches/join");
+    }
+    data.churchId = churchId!;
     const result = createPersonFormSchema.safeParse(data);
 
     if (!result.success) {
@@ -89,7 +101,7 @@ export const AddPersonForm = () => {
                   <Input
                     placeholder="Prénom"
                     {...field}
-                    className="rounded-full"
+                    className="rounded-xl"
                   />
                 </FormControl>
                 <FormMessage />
@@ -103,11 +115,7 @@ export const AddPersonForm = () => {
               <FormItem>
                 {/* <FormLabel>Nom</FormLabel> */}
                 <FormControl>
-                  <Input
-                    placeholder="Nom"
-                    {...field}
-                    className="rounded-full"
-                  />
+                  <Input placeholder="Nom" {...field} className="rounded-xl" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,11 +129,7 @@ export const AddPersonForm = () => {
             <FormItem>
               {/* <FormLabel>Nom</FormLabel> */}
               <FormControl>
-                <Input
-                  placeholder="E-mail"
-                  {...field}
-                  className="rounded-full"
-                />
+                <Input placeholder="E-mail" {...field} className="rounded-xl" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,7 +144,7 @@ export const AddPersonForm = () => {
                 <PhoneInput
                   placeholder="+33 6 12 34 57 89"
                   {...field}
-                  className="rounded-full"
+                  className="rounded-xl"
                 />
               </FormControl>
               <FormMessage />
@@ -161,7 +165,7 @@ export const AddPersonForm = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full text-left font-normal font-epilogue rounded-full col-span-3",
+                        "w-full text-left font-normal font-epilogue rounded-xl col-span-3",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -204,7 +208,7 @@ export const AddPersonForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="rounded-full">
+                    <SelectTrigger className="rounded-xl">
                       <SelectValue placeholder="Choisir un sexe" />
                     </SelectTrigger>
                   </FormControl>
@@ -226,7 +230,7 @@ export const AddPersonForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="rounded-full">
+                    <SelectTrigger className="rounded-xl">
                       <SelectValue placeholder="Choisir un sexe" />
                     </SelectTrigger>
                   </FormControl>
@@ -251,7 +255,7 @@ export const AddPersonForm = () => {
         </div>
         <div className="grid grid-cols-2 space-x-4">
           <div></div>
-          <Button type="submit" className="rounded-full">
+          <Button type="submit" className="rounded-xl">
             Ajouter
           </Button>
         </div>

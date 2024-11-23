@@ -2,7 +2,11 @@
 
 import { signIn } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { createPersonFormSchema, createReportFormSchema } from "@/lib/schema";
+import {
+  createChurchFormSchema,
+  createPersonFormSchema,
+  createReportFormSchema,
+} from "@/lib/schema";
 import { saltAndHashPasword } from "@/lib/utils";
 import { console } from "inspector";
 import { CredentialsSignin } from "next-auth";
@@ -42,6 +46,7 @@ export const createPerson = async (
         dateOfBirth: data.dateOfBirth,
         gender: data.gender,
         status: data.status,
+        churchId: data.churchId,
       },
     });
 
@@ -65,6 +70,7 @@ export const createReport = async (
   data: z.infer<typeof createReportFormSchema>
 ) => {
   try {
+    // console.log("data from createReport", data);
     const reportCreated = await prisma.report.create({
       data: data,
     });
@@ -75,11 +81,15 @@ export const createReport = async (
       error: null,
       data: JSON.parse(JSON.stringify(reportCreated)),
     };
-  } catch {
-    console.error("Une erreur est survenue lors de la création du rapport");
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de la création du rapport",
+      error
+    );
     return {
       ok: false,
-      error: "Une erreur est survenue lors de la création du rapport",
+      error:
+        `Une erreur est survenue lors de la création du rapport. ${error}`.trim(),
       data: null,
     };
   }
@@ -148,3 +158,103 @@ export const loginUser = async (formData: FormData) => {
   }
   redirect("/dashboard");
 };
+
+export const createChurch = async (
+  data: z.infer<typeof createChurchFormSchema>,
+  userId: string
+) => {
+  try {
+    // console.log("data from createReport", data);
+    const churchCreated = await prisma.church.create({
+      data: {
+        ...data,
+        joinCode: Math.random().toString(36).substring(2, 15),
+      },
+    });
+
+    // Add churchId to user
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        churchId: churchCreated.id,
+      },
+    });
+    // revalidatePath(`/persons/${data.personId}`);
+    return {
+      ok: true,
+      error: null,
+      data: JSON.parse(JSON.stringify(churchCreated)),
+    };
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de la création du rapport",
+      error
+    );
+    return {
+      ok: false,
+      error:
+        `Une erreur est survenue lors de la création du rapport. ${error}`.trim(),
+      data: null,
+    };
+  }
+};
+
+export const joinChurch = async (
+  data: { joinCode: string },
+  userId: string
+) => {
+  try {
+    const church = await prisma.church.findFirst({
+      where: {
+        joinCode: data.joinCode,
+      },
+    });
+
+    if (!church) {
+      console.error("L'église n'existe pas");
+      return {
+        ok: false,
+        error: "L'église n'existe pas",
+        data: null,
+      };
+    }
+
+    // Add churchId to user
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        churchId: church.id,
+      },
+    });
+
+    return {
+      ok: true,
+      error: null,
+      data: JSON.parse(JSON.stringify(church)),
+    };
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de la création du rapport",
+      error
+    );
+    return {
+      ok: false,
+      error:
+        `Une erreur est survenue lors de la création du rapport. ${error}`.trim(),
+      data: null,
+    };
+  }
+};
+
+export async function getUserChurch(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  return user?.churchId;
+}

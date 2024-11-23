@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Tiptap } from "@/components/tiptap";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
@@ -28,22 +29,33 @@ export default async function PersonIdReportIdPage(props: {
     },
   });
   if (!person) {
-    return <div>Person not found</div>;
+    return <div>Aucune personne trouvée.</div>;
   }
   const report = await prisma.report.findUnique({
     where: {
       id: reportId,
     },
   });
+
   if (!report) {
-    return <div>Report not found</div>;
+    return <div>Aucun rapport pour cette personne.</div>;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: report.userId,
+    },
+  });
+
+  if (!user) {
+    return <div>Utilisateur non trouvé.</div>;
   }
 
   return (
     <div className="h-full">
       <main className="m-4">
         <div className="mx-auto my-10 flex max-w-4xl items-center justify-between p-4">
-          <Link href={`/persons/${personId}`}>
+          <Link href={`/dashboard/${user.churchId}/persons/${personId}`}>
             <ArrowLeftIcon className="size-8 cursor-pointer" />
           </Link>
           <h1 className="text-center font-lato text-xl font-black lg:text-2xl xl:text-3xl">
@@ -54,22 +66,33 @@ export default async function PersonIdReportIdPage(props: {
         </div>
         <Card className="mx-auto my-10 max-w-4xl items-center justify-between p-4">
           <CardHeader>
-            <div className="flex items-center justify-evenly">
-              <span className="font-lato text-xl font-semibold">
-                Date de l'entretien :{" "}
-              </span>
-              <span className="ml-10 font-lato text-xl">
-                {format(new Date(report.date), "PPP", { locale: fr })}
-              </span>
+            <div className="flex flex-col items-center justify-around">
+              <div>
+                <span className="font-lato font-semibold">
+                  Date de l'entretien :{" "}
+                </span>
+                <span className="ml-10 font-lato">
+                  {format(new Date(report.date), "PPP", { locale: fr })}
+                </span>
+              </div>
+              <div>
+                <span className="font-lato font-semibold">
+                  Entretien réalisé par :{" "}
+                </span>
+                <span className="ml-10 font-lato">
+                  {user.firstname} {user.lastname?.toLocaleUpperCase()}
+                </span>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col items-center justify-evenly gap-4">
               <span className="font-lato text-xl font-semibold">
-                Notes de l'entretien :{" "}
+                {report.reason}
               </span>
-              <span className="text-justify font-epilogue text-base">
-                {report.content}
+              <span className="w-full text-justify font-epilogue text-base">
+                {/* {report.content} */}
+                <Tiptap description={report.content} />
               </span>
             </div>
           </CardContent>

@@ -22,11 +22,11 @@ export const PersonsTableFilter = ({
       onChange={(event) =>
         table.getColumn("Nom")?.setFilterValue(event.target.value)
       }
-      className="mr-4 max-w-md rounded-full"
+      className="mr-4 max-w-md rounded-xl"
     />
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="secondary" className="ml-auto rounded-full border">
+        <Button variant="secondary" className="ml-auto rounded-xl border">
           Afficher <ChevronDown />
         </Button>
       </DropdownMenuTrigger>

@@ -1,6 +1,7 @@
 "use client";
 
 import { createReport } from "@/actions/actions";
+import { Tiptap } from "@/components/tiptap";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -23,11 +24,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
 
 export type AddReportFormProps = {
   personId: string;
@@ -37,17 +39,26 @@ export type AddReportFormProps = {
 export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof createReportFormSchema>>({
+    mode: "onChange",
     resolver: zodResolver(createReportFormSchema),
     defaultValues: {
       personId,
       userId,
       date: new Date(),
+      reason: ``,
       content: ``,
     },
   });
+  // const { data: session } = useSession();
+
+  // if (!session) {
+  //   return null;
+  // }
 
   async function onSubmit(data: z.infer<typeof createReportFormSchema>) {
     const result = createReportFormSchema.safeParse(data);
+
+    // console.log(result);
 
     if (!result.success) {
       toast.error("Veuillez remplir correctement le formulaire");
@@ -56,11 +67,17 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
 
     const response = await createReport(data);
 
+    // console.log(response);
+
     if (response.ok) {
       toast.success(`Rapport du ${response.data.date} ajouté avec succès`);
 
       form.reset();
-      router.push(`/persons/${personId}`);
+      // if (!session?.user.churchId) {
+      //   router.push("/dashboard");
+      // }
+      // router.push(`dashboard/${session?.user.churchId}/persons/${personId}`);
+      router.back();
     } else toast.error(response.error);
   }
 
@@ -85,7 +102,7 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "text-left font-normal font-epilogue rounded-full",
+                          "text-left font-normal font-epilogue rounded-xl",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -119,6 +136,29 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
           />
           <FormField
             control={form.control}
+            name="reason"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-lato text-xl font-semibold">
+                  Raison de l'entretien
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="w-full rounded-2xl border border-input p-2 font-epilogue text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-primary"
+                    placeholder="Raison"
+                  />
+                </FormControl>
+                <FormDescription className="text-muted-foreground">
+                  Écrire la raison de l'entretien, le contexte, les
+                  circonstances.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="content"
             render={({ field }) => (
               <FormItem>
@@ -127,11 +167,9 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
                 </FormLabel>
                 <FormControl>
                   <div>
-                    <Textarea
-                      {...field}
-                      className="w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      placeholder="Saisir le rapport de l'entretien ici..."
-                      rows={16}
+                    <Tiptap
+                      description={field.value}
+                      onChange={field.onChange}
                     />
                   </div>
                 </FormControl>
@@ -146,7 +184,7 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
         <div className="grid grid-cols-2 space-x-4">
           <Button
             variant={"destructive"}
-            className="rounded-full"
+            className="rounded-xl"
             onClick={() => {
               router.push(`/persons/${personId}`);
             }}
@@ -155,7 +193,7 @@ export const AddReportForm = ({ personId, userId }: AddReportFormProps) => {
           </Button>
           <Button
             type="submit"
-            className="rounded-full"
+            className="rounded-xl"
             onClick={() => {
               toast.info(`${JSON.stringify(form.getValues())}`);
             }}

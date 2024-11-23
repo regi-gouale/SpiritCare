@@ -72,16 +72,18 @@ export default async function PersonIdPage(props: {
       <main>
         <div className="mx-auto my-10 flex w-full flex-col items-center justify-between space-y-8 p-10">
           <div className="flex w-full max-w-3xl items-center justify-between">
-            <Link href="/persons">
+            <Link href={`/dashboard/${person.churchId}/persons`}>
               <ArrowLeftIcon className="size-8 cursor-pointer" />
             </Link>
             <h1 className="text-center font-lato text-xl font-black md:text-2xl lg:text-3xl xl:text-4xl">
               {`${person.firstname} ${person.lastname.toLocaleUpperCase()}`}
             </h1>
-            <Link href={`/persons/${personId}/add-report`}>
+            <Link
+              href={`/dashboard/${person.churchId}/persons/${personId}/add-report`}
+            >
               <Button
                 variant="default"
-                className="rounded-full font-lato font-semibold"
+                className="rounded-xl font-lato font-semibold"
               >
                 <PlusIcon className="size-4" />
                 Rapport
@@ -92,10 +94,12 @@ export default async function PersonIdPage(props: {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span className="text-xl">Informations</span>
-                <Link href={`/persons/${personId}/edit`}>
+                <Link
+                  href={`/dashboard/${person.churchId}/persons/${personId}/edit`}
+                >
                   <Button
                     variant="secondary"
-                    className="cursor-pointer rounded-full"
+                    className="cursor-pointer rounded-xl"
                   >
                     <PenIcon className="size-3" />
                     <span className="font-lato font-semibold">Modifier</span>
@@ -164,12 +168,12 @@ export default async function PersonIdPage(props: {
                       {format(new Date(report.date), "PPP", { locale: fr })}
                       <div className="flex space-x-2">
                         <Link
-                          href={`/persons/${personId}/reports/${report.id}`}
+                          href={`/dashboard/${person.churchId}/persons/${personId}/reports/${report.id}`}
                         >
                           <Button
                             variant="outline"
                             size="icon"
-                            className="rounded-full"
+                            className="rounded-xl"
                           >
                             <Eye className="size-4 cursor-pointer" />
                           </Button>
@@ -177,7 +181,7 @@ export default async function PersonIdPage(props: {
                         {/* <Button
                           variant="outline"
                           size="icon"
-                          className="rounded-full"
+                          className="rounded-xl"
                         >
                           <TrashIcon className="size-4 cursor-pointer" />
                         </Button> */}
@@ -186,9 +190,12 @@ export default async function PersonIdPage(props: {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <div className="flex">
-                        <span className="truncate font-epilogue text-sm">
-                          {report.content}
+                      <div className="flex items-center space-x-4 align-middle">
+                        <span className="truncate font-epilogue text-sm font-semibold">
+                          Raison :
+                        </span>
+                        <span className="font-epilogue text-sm">
+                          {report.reason}
                         </span>
                       </div>
                     </div>

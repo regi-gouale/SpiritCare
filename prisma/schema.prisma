@@ -31,31 +31,47 @@ enum Role {
 }
 
 model Person {
-  id          String   @id @default(cuid())
-  firstname   String
-  lastname    String
-  fullname    String?
-  email       String   @unique
-  phone       String
-  dateOfBirth DateTime
-  gender      Gender   @default(MALE)
-  status      Status
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  User        User[]
-  Report      Report[]
+  id            String       @id @default(cuid())
+  firstname     String
+  lastname      String
+  fullname      String?
+  email         String       @unique
+  phone         String
+  dateOfBirth   DateTime
+  gender        Gender       @default(MALE)
+  status        Status
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  User          User[]
+  Report        Report[]
+  departmentIds String[]
+  churchId      String
+  Church        Church       @relation(fields: [churchId], references: [id])
+  Department    Department[]
 }
 
 model Church {
+  id         String       @id @default(cuid())
+  name       String
+  address    String
+  city       String
+  country    String
+  joinCode   String       @unique @default(cuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  User       User[]
+  Department Department[]
+  Person     Person[]
+}
+
+model Department {
   id        String   @id @default(cuid())
   name      String
-  address   String
-  city      String
-  country   String
-  joinCode  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User[]
+  churchId  String
+  Church    Church   @relation(fields: [churchId], references: [id])
+  Person    Person[]
 }
 
 model User {
@@ -120,10 +136,22 @@ model Report {
   id        String   @id @default(cuid())
   content   String
   date      DateTime
+  reason    String
   User      User     @relation(fields: [userId], references: [id])
   userId    String
   person    Person   @relation(fields: [personId], references: [id])
   personId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  // type      ReportType @default(ENTRETIEN)
 }
+
+// enum ReportType {
+//   ENTRETIEN
+//   CONSEIL
+//   PRIERE
+//   SUIVI
+//   INTEGRATION
+//   DEPART
+//   CLINIQUE
+// }
