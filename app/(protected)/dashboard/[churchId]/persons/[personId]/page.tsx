@@ -106,9 +106,7 @@ export default async function PersonIdPage(props: {
                   </Button>
                 </Link>
               </CardTitle>
-              <CardDescription>
-                Liste des informations du membre
-              </CardDescription>
+              <CardDescription>Informations</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -164,7 +162,7 @@ export default async function PersonIdPage(props: {
                 <Card key={report.id} className="w-full max-w-3xl">
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                      Entretien du{" "}
+                      Rendez-vous du{" "}
                       {format(new Date(report.date), "PPP", { locale: fr })}
                       <div className="flex space-x-2">
                         <Link

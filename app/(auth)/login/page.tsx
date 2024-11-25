@@ -26,8 +26,8 @@ export default async function LoginPage() {
       <CardHeader>
         <CardTitle className="text-center font-lato text-xl font-medium md:text-2xl xl:text-3xl">
           Bienvenue sur{" "}
-          <span className="font-semibold text-primary">Spirit</span>
-          <span className="font-black text-primary">Care</span>
+          <span className="font-semibold text-primary">Shepherd</span>
+          <span className="font-black text-primary">Tools</span>
         </CardTitle>
         <CardDescription className="mt-8 font-epilogue">
           Remplissez toutes les informations réquises s'il vous plait.

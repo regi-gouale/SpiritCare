@@ -1,6 +1,11 @@
 import { auth } from "@/auth";
 import { Tiptap } from "@/components/tiptap";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -59,7 +64,7 @@ export default async function PersonIdReportIdPage(props: {
             <ArrowLeftIcon className="size-8 cursor-pointer" />
           </Link>
           <h1 className="text-center font-lato text-xl font-black lg:text-2xl xl:text-3xl">
-            Entretien de {person.firstname}{" "}
+            Rendez-vous de {person.firstname}{" "}
             {person.lastname.toLocaleUpperCase()}
           </h1>
           <div></div>
@@ -75,14 +80,6 @@ export default async function PersonIdReportIdPage(props: {
                   {format(new Date(report.date), "PPP", { locale: fr })}
                 </span>
               </div>
-              <div>
-                <span className="font-lato font-semibold">
-                  Entretien réalisé par :{" "}
-                </span>
-                <span className="ml-10 font-lato">
-                  {user.firstname} {user.lastname?.toLocaleUpperCase()}
-                </span>
-              </div>
             </div>
           </CardHeader>
           <CardContent>
@@ -96,6 +93,16 @@ export default async function PersonIdReportIdPage(props: {
               </span>
             </div>
           </CardContent>
+          <CardFooter>
+            <div className="text-sm">
+              <span className="font-lato font-semibold">
+                Rendez-vous réalisé par :{" "}
+              </span>
+              <span className="ml-10 font-lato">
+                {user.firstname} {user.lastname?.toLocaleUpperCase()}
+              </span>
+            </div>
+          </CardFooter>
         </Card>
       </main>
     </div>

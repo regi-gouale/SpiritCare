@@ -26,8 +26,8 @@ export default async function RegisterPage() {
     <Card className="mx-auto my-10 size-full max-w-2xl rounded-xl bg-background p-4 shadow-inner md:p-8">
       <CardHeader>
         <CardTitle className="text-center font-lato text-xl font-medium md:text-2xl xl:text-3xl">
-          Bienvenue sur <span className="font-semibold">Spirit</span>
-          <span className="font-black text-primary">Care</span>
+          Bienvenue sur <span className="font-semibold">Shepherd</span>
+          <span className="font-black text-primary">Tools</span>
         </CardTitle>
         <CardDescription className="mt-4 font-epilogue">
           Remplissez toutes les informations réquises s'il vous plait.

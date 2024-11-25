@@ -68,9 +68,12 @@ export const JoinChurchForm = ({ userId }: JointChurchFormProps) => {
                 name="joinCode"
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col justify-center space-y-4">
-                    <FormLabel>Code pour réjoindre l'église</FormLabel>
+                    <FormLabel>Code</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Insérer le code" />
+                      <Input
+                        {...field}
+                        placeholder="Insérer le code pour réjoindre l'église"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
