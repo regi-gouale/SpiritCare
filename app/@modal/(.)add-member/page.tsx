@@ -4,7 +4,7 @@ import { Modal } from "@/components/modal";
 import { AddPersonForm } from "@/components/persons/add-person-form";
 import { SessionProvider } from "next-auth/react";
 
-export const AddMemberPage = () => {
+export default function AddMemberPage() {
   return (
     <Modal
       title="Ajouter un membre"
@@ -15,6 +15,4 @@ export const AddMemberPage = () => {
       </SessionProvider>
     </Modal>
   );
-};
-
-export default AddMemberPage;
+}

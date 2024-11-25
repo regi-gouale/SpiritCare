@@ -28,7 +28,7 @@ export const RecentReportsDataTable = ({
   });
 
   return (
-    <div className="border rounded-xl">
+    <div className="rounded-xl border">
       <Table className="w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

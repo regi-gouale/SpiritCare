@@ -1,13 +1,70 @@
 // import { prisma } from "@/lib/prisma";
 import { fakerFR as faker } from "@faker-js/faker";
-import { Gender, PrismaClient, Status } from "@prisma/client";
+import { PrismaClient, Role, Status } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function main() {
-  const genders = [Gender.FEMALE, Gender.MALE];
-  const roles = [
-    // Status.ADMIN,
+async function createChurch(numberOfChurches: number = 5) {
+  const churches = [];
+  for (let i = 0; i < numberOfChurches; i++) {
+    const name = faker.company.name();
+    const address = faker.location.street();
+    const city = faker.location.city();
+    const country = faker.location.country();
+    const joinCode = Math.random().toString(36).substring(2, 15);
+
+    churches.push(
+      await prisma.church.create({
+        data: {
+          name,
+          address,
+          city,
+          country,
+          joinCode,
+        },
+      })
+    );
+  }
+
+  return churches;
+}
+
+async function createUsers(numberOfUsers: number = 5) {
+  const churches = await prisma.church.findMany();
+  const users = [];
+  for (let i = 0; i < numberOfUsers; i++) {
+    const firstname = faker.person.firstName();
+    const lastname = faker.person.lastName();
+    const email = faker.internet.email().toLocaleLowerCase();
+
+    const church = churches[Math.floor(Math.random() * churches.length)];
+    const churchId = church.id;
+
+    const roles = [Role.ADMIN, Role.SUPERUSER, Role.USER];
+    const role = roles[Math.floor(Math.random() * roles.length)];
+
+    users.push(
+      await prisma.user.create({
+        data: {
+          firstname,
+          lastname,
+          email,
+          churchId,
+          password:
+            "$2a$16$kxJdPB0n1aqR/0fz1Jvat.vSUNEEXykcPJmvwf11pmeLxSwMMRqXy",
+          role,
+        },
+      })
+    );
+  }
+
+  return users;
+}
+
+async function createPersons(numberOfPersons: number = 5) {
+  const churches = await prisma.church.findMany();
+  const statuses = [
+    Status.ADMIN,
     Status.AIDE,
     Status.ASSISTANT_PASTEUR,
     Status.MEMBER,
@@ -17,49 +74,45 @@ async function main() {
     Status.STAR,
   ];
 
-  let peoples = [];
-  for (const i of Array.from({ length: 10 })) {
-    const gender = genders[Math.floor(Math.random() * genders.length)];
-    const firstname = faker.person.firstName(
-      gender.toLocaleLowerCase() as "male" | "female"
-    );
+  const persons = [];
+  for (let i = 0; i < numberOfPersons; i++) {
+    const firstname = faker.person.firstName();
     const lastname = faker.person.lastName();
-    peoples.push({
-      firstname,
-      lastname,
-      fullname: `${firstname} ${lastname.toLocaleUpperCase()}`,
-      email: faker.internet.email().toLocaleLowerCase(),
-      phone: faker.phone.number({ style: "international" }),
-      dateOfBirth: faker.date.birthdate(),
-      gender,
-      status: roles[Math.floor(Math.random() * roles.length)],
+    const fullname = `${firstname} ${lastname.toLocaleUpperCase()}`;
+    const email = faker.internet.email().toLocaleLowerCase();
+    const phone = faker.phone.number({
+      style: "international",
     });
-  }
+    const dateOfBirth = faker.date.birthdate();
 
-  let peoplesCreated = [];
-  for (const person of peoples) {
-    peoplesCreated.push(
+    const church = churches[Math.floor(Math.random() * churches.length)];
+    const churchId = church.id;
+
+    const status = statuses[Math.floor(Math.random() * statuses.length)];
+
+    persons.push(
       await prisma.person.create({
-        data: person,
+        data: {
+          firstname,
+          lastname,
+          fullname,
+          email,
+          phone,
+          dateOfBirth,
+          status,
+          churchId,
+        },
       })
     );
   }
 
-  for (const person of peoplesCreated) {
-    // Create a random number of reports for each user
-    const reports = Array.from({ length: Math.floor(Math.random() * 10) }).map(
-      () => ({
-        date: faker.date.recent({ days: 30 }),
-        content: faker.lorem.paragraph(),
-        personId: person.id,
-      })
-    );
-    for (const report of reports) {
-      await prisma.report.create({
-        data: report,
-      });
-    }
-  }
+  return persons;
+}
+
+async function main() {
+  await createChurch();
+  await createUsers(20);
+  await createPersons(1000);
 }
 
 main()

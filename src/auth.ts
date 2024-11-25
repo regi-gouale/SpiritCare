@@ -1,8 +1,15 @@
 import { Role } from "@prisma/client";
 import { compare } from "bcryptjs";
-import NextAuth, { CredentialsSignin } from "next-auth";
+import NextAuth, { CredentialsSignin, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./lib/prisma";
+
+interface ExtendedUser extends User {
+  role: Role;
+  firstname: string;
+  lastname: string;
+  churchId: string;
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -58,17 +65,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // session: {
   //   strategy: "jwt",
   //   maxAge: 30 * 24 * 60 * 60,
-  //   updateAge: 24 * 60 * 60,
   // },
   callbacks: {
     jwt({ user, token }) {
       if (user) {
         token.id = user.id;
-        token.role = user.role;
         token.email = user.email;
-        token.firstname = user.firstname;
-        token.lastname = user.lastname;
-        token.churchId = user.churchId;
+        token.role = (user as ExtendedUser).role;
+        // token.role = user.role;
+        token.firstname = (user as ExtendedUser).firstname;
+        token.lastname = (user as ExtendedUser).lastname;
+        token.churchId = (user as ExtendedUser).churchId;
       }
       return token;
     },
