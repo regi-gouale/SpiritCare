@@ -94,8 +94,11 @@ export default async function ChurchIdDashboard(props: {
   const recentReports = await getRecentReports(session.user.id);
 
   return (
-    <div className="flex min-h-screen w-full flex-col" suppressHydrationWarning>
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+    <div
+      className="flex min-h-[calc(100vh_-_theme(spacing.32))] w-full flex-col"
+      suppressHydrationWarning
+    >
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

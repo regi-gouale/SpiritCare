@@ -34,8 +34,8 @@ export const Header: React.FC = async () => {
   }
 
   return (
-    <header className="sticky top-0 mx-10 flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-background px-4">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-background px-20 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+      <div className="flex items-center gap-4 px-4">
         <Link
           href={"/dashboard"}
           className="mr-10 flex items-center gap-2 text-xl"

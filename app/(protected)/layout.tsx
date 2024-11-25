@@ -1,5 +1,7 @@
+import { AppSidebar } from "@/components/app-sidebar";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
 interface DashboardLayoutProps {
@@ -8,12 +10,13 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="h-full">
-      <Header />
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.28))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-        {children}
-      </main>
-      <Footer />
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <Header />
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+        <Footer />
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
