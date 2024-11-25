@@ -65,7 +65,7 @@ export const Header: React.FC = async () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative size-8 rounded-full">
               <Avatar className="size-8">
-                <AvatarFallback className="bg-primary font-lato text-base font-black text-primary-foreground">
+                <AvatarFallback className="bg-primary font-lato text-sm font-semibold text-primary-foreground">
                   {user.firstname?.charAt(0).toLocaleUpperCase()}
                   {user.lastname?.charAt(0).toLocaleUpperCase()}
                 </AvatarFallback>

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { joinChurchFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -19,12 +20,9 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-interface JointChurchFormProps {
-  userId: string;
-}
-
-export const JoinChurchForm = ({ userId }: JointChurchFormProps) => {
+export const JoinChurchForm = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof joinChurchFormSchema>>({
     resolver: zodResolver(joinChurchFormSchema),
@@ -32,6 +30,8 @@ export const JoinChurchForm = ({ userId }: JointChurchFormProps) => {
       joinCode: "",
     },
   });
+
+  if (!session) return null;
 
   async function onSubmit(data: z.infer<typeof joinChurchFormSchema>) {
     const result = joinChurchFormSchema.safeParse(data);
@@ -41,7 +41,7 @@ export const JoinChurchForm = ({ userId }: JointChurchFormProps) => {
       return;
     }
 
-    const response = await joinChurch(data, userId);
+    const response = await joinChurch(data, session!.user.id);
 
     if (response.ok) {
       toast.success("Vous avez rejoint l'église avec succès");
@@ -79,8 +79,15 @@ export const JoinChurchForm = ({ userId }: JointChurchFormProps) => {
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-2">
-                <div></div>
+              <div className="grid grid-cols-2 space-x-4">
+                <Button
+                  variant={"secondary"}
+                  className="font-lato font-semibold"
+                  onClick={() => router.back()}
+                  disabled={form.formState.isSubmitting}
+                >
+                  Annuler
+                </Button>
                 <Button type="submit" className="font-lato font-semibold">
                   Réjoindre l'église
                 </Button>

@@ -108,7 +108,10 @@ export const personsTableColumns: ColumnDef<Person>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Link href={`/persons/${person.id}`} className="block w-full">
+              <Link
+                href={`/dashboard/${person.churchId}/persons/${person.id}`}
+                className="block w-full"
+              >
                 Voir le profil
               </Link>
             </DropdownMenuItem>
