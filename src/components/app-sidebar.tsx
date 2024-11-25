@@ -36,6 +36,11 @@ const data = {
   },
   teams: [
     {
+      name: "ICC Lyon",
+      logo: Command,
+      plan: "Campus",
+    },
+    {
       name: "Acme Inc",
       logo: GalleryVerticalEnd,
       plan: "Eglise de maison",
@@ -44,16 +49,6 @@ const data = {
       name: "Acme Corp.",
       logo: AudioWaveform,
       plan: "Famille connectée",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Eglise connectée",
-    },
-    {
-      name: "ICC Lyon",
-      logo: Command,
-      plan: "Campus",
     },
   ],
   navMain: [
@@ -64,34 +59,34 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Tous",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "STAR",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Réglages",
           url: "#",
         },
       ],
     },
     {
-      title: "Rapports",
+      title: "Mes Suivis",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Nouveau Rapport de Suivi",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Mes Rapports",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Tous",
           url: "#",
         },
       ],

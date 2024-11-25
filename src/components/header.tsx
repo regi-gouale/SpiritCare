@@ -41,7 +41,7 @@ export const Header: React.FC = async () => {
           className="mr-10 flex items-center gap-2 text-xl"
         >
           <div className="font-semibold text-primary">
-            Spirit<span className="font-black">Care</span>
+            Shepherd<span className="font-black">Tools</span>
           </div>
         </Link>
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-base lg:gap-6">
@@ -65,8 +65,9 @@ export const Header: React.FC = async () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative size-8 rounded-full">
               <Avatar className="size-8">
-                <AvatarFallback className="bg-primary font-lato text-xl font-black text-primary-foreground">
+                <AvatarFallback className="bg-primary font-lato text-base font-black text-primary-foreground">
                   {user.firstname?.charAt(0).toLocaleUpperCase()}
+                  {user.lastname?.charAt(0).toLocaleUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </Button>
