@@ -10,14 +10,14 @@ import {
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
+  UsersIcon,
 } from "lucide-react";
 import * as React from "react";
 
+import { ChurchSwitcher } from "@/components/church-switcher";
+import { NavDepartments } from "@/components/nav-departments";
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -25,36 +25,42 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { SessionProvider } from "next-auth/react";
 
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "gouale",
+    email: "regi.gouale@gouale.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
     {
       name: "Acme Inc",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: "Eglise de maison",
     },
     {
       name: "Acme Corp.",
       logo: AudioWaveform,
-      plan: "Startup",
+      plan: "Famille connectée",
     },
     {
       name: "Evil Corp.",
       logo: Command,
-      plan: "Free",
+      plan: "Eglise connectée",
+    },
+    {
+      name: "ICC Lyon",
+      logo: Command,
+      plan: "Campus",
     },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Membres",
       url: "#",
-      icon: SquareTerminal,
+      icon: UsersIcon,
       isActive: true,
       items: [
         {
@@ -72,7 +78,7 @@ const data = {
       ],
     },
     {
-      title: "Models",
+      title: "Rapports",
       url: "#",
       icon: Bot,
       items: [
@@ -114,7 +120,7 @@ const data = {
       ],
     },
     {
-      title: "Settings",
+      title: "Réglages",
       url: "#",
       icon: Settings2,
       items: [
@@ -160,14 +166,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <ChurchSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavDepartments departments={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <SessionProvider>
+          <NavUser />
+        </SessionProvider>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
