@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { JoinChurchForm } from "@/components/churches/join-church-form";
+import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default async function JoinChurchPage() {
@@ -15,7 +16,9 @@ export default async function JoinChurchPage() {
 
   return (
     <div className="mx-auto w-full max-w-4xl">
-      <JoinChurchForm userId={session.user.id} />
+      <SessionProvider>
+        <JoinChurchForm />
+      </SessionProvider>
     </div>
   );
 }

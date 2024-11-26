@@ -3,7 +3,7 @@ import { ReportWithMember } from "@/components/dashboard/columns";
 import { RecentReportsDataTable } from "@/components/dashboard/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { Person, Report } from "@prisma/client";
+import { Person, Report, Status } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 async function getNumberOfMembers(churchId: string) {
@@ -27,17 +27,25 @@ async function getNumberOfMembersCreatedThisMonth(churchId: string) {
   return members.length;
 }
 
-async function getNumberOfReports() {
-  const reports = await prisma.report.findMany();
+async function getNumberOfReports(churchId: string) {
+  const reports = await prisma.report.findMany({
+    where: {
+      churchId,
+    },
+  });
   return reports.length;
 }
 
-async function getRecentReports(userId: string): Promise<ReportWithMember[]> {
+async function getRecentReports(
+  userId: string,
+  churchId: string
+): Promise<ReportWithMember[]> {
   const reportsWithMembers: ReportWithMember[] = [];
 
   const reports = (await prisma.report.findMany({
     where: {
       userId,
+      churchId,
     },
     take: 5,
     orderBy: {
@@ -72,6 +80,18 @@ async function getNumberOfMyReports(userId: string, churchId: string) {
   return reports.length;
 }
 
+async function getNumberOfHelpers(churchId: string) {
+  const helpers = await prisma.person.findMany({
+    where: {
+      churchId,
+      status: {
+        not: Status.MEMBER,
+      },
+    },
+  });
+  return helpers.length;
+}
+
 type ChurchIdDashboardProps = Promise<{
   churchId: string;
 }>;
@@ -91,7 +111,13 @@ export default async function ChurchIdDashboard(props: {
     return <div>Loading</div>;
   }
 
-  const recentReports = await getRecentReports(session.user.id);
+  const recentReports = await getRecentReports(session.user.id, churchId);
+
+  const percentageOfHelpers = Math.round(
+    ((await getNumberOfHelpers(churchId)) /
+      (await getNumberOfMembers(churchId))) *
+      100
+  );
 
   return (
     <div
@@ -99,7 +125,7 @@ export default async function ChurchIdDashboard(props: {
       suppressHydrationWarning
     >
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="font-medium">Membres de l'église</CardTitle>
@@ -116,11 +142,28 @@ export default async function ChurchIdDashboard(props: {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
+                Nombre de serviteurs
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col items-start">
+              <div className="text-2xl font-bold">
+                {getNumberOfHelpers(churchId)}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Pourcentage : {percentageOfHelpers} %
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
                 Rapports d'entretiens
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-start">
-              <div className="text-2xl font-bold">{getNumberOfReports()}</div>
+              <div className="text-2xl font-bold">
+                {getNumberOfReports(churchId)}
+              </div>
               <div className="text-sm text-muted-foreground">
                 Mes rapports : {getNumberOfMyReports(session.user.id, churchId)}
               </div>

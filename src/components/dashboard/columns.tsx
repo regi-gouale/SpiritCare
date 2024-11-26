@@ -28,11 +28,11 @@ export const recentReportsColumns: ColumnDef<ReportWithMember>[] = [
     id: "index",
     accessorKey: "index",
     header: () => (
-      <div className="font-lato text-sm font-semibold ml-4">N°</div>
+      <div className="ml-4 font-lato text-sm font-semibold">N°</div>
     ),
     cell: ({ row }) => {
       return (
-        <div className="truncate text-left font-epilogue text-sm ml-4">
+        <div className="ml-4 truncate text-left font-epilogue text-sm">
           {row.original.index + 1}
         </div>
       );
