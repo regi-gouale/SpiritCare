@@ -1,15 +1,6 @@
+import { getUserChurchId } from "@/actions/actions";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-
-async function getUserChurch(userId: string) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-  return user?.churchId;
-}
 
 export default async function Component() {
   const session = await auth();
@@ -21,7 +12,7 @@ export default async function Component() {
     return <div>Loading</div>;
   }
 
-  const churchId = await getUserChurch(session.user.id);
+  const churchId = await getUserChurchId(session.user.id);
 
   if (!churchId) {
     redirect("/churches/join");

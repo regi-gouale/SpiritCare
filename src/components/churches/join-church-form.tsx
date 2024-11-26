@@ -1,6 +1,7 @@
 "use client";
 
 import { joinChurch } from "@/actions/actions";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
@@ -10,6 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { joinChurchFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
@@ -17,8 +19,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 
 export const JoinChurchForm = () => {
   const router = useRouter();
@@ -49,7 +49,9 @@ export const JoinChurchForm = () => {
       form.reset();
       router.push(`/dashboard/${response.data.id}`);
     } else
-      toast.error("Une erreur est survenue lors de la création de l'église");
+      toast.error(
+        response.error || "Une erreur est survenue lors de l'opération"
+      );
   }
 
   return (

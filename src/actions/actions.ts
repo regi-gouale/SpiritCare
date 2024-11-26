@@ -228,6 +228,9 @@ export const joinChurch = async (
       },
       data: {
         churchId: church.id,
+        churchIds: {
+          push: church.id,
+        },
       },
     });
 
@@ -250,11 +253,59 @@ export const joinChurch = async (
   }
 };
 
-export async function getUserChurch(userId: string) {
+export async function getUserChurchId(userId: string) {
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
     },
   });
-  return user?.churchId;
+
+  if (!user) {
+    return null;
+  }
+
+  if (!user.churchId) {
+    if (user.churchIds.length > 0) {
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          churchId: user.churchIds[0],
+        },
+      });
+      return user.churchIds[0];
+    }
+    return null;
+  }
+
+  if (user.churchIds.length === 0) {
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        churchIds: {
+          push: user.churchId,
+        },
+      },
+    });
+    return user.churchId;
+  }
+
+  return user.churchId;
+}
+
+export async function getUserChurchIds(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    return null;
+  }
+
+  return user.churchIds;
 }

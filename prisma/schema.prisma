@@ -88,9 +88,10 @@ model User {
   sessions  Session[]
   Person    Person?   @relation(fields: [personId], references: [id])
   personId  String?
+  churchIds String[]
+  Report    Report[]
   Church    Church?   @relation(fields: [churchId], references: [id])
   churchId  String?
-  Report    Report[]
 
   @@map("users")
 }

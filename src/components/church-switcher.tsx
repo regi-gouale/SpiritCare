@@ -1,13 +1,14 @@
 import { ChevronsUpDown, Plus } from "lucide-react";
 import * as React from "react";
 
+import { getUserChurchIds } from "@/actions/actions";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
+  // DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -16,21 +17,33 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export function ChurchSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
-  const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
-
+export function ChurchSwitcher() {
   const router = useRouter();
+  const { data: session } = useSession();
+  const { isMobile } = useSidebar();
+  const [activeChurch, setActiveChurch] = React.useState({});
+
+  const churchIdsRef = React.useRef<string[]>([]);
+  const userId = session?.user.id;
+
+  useEffect(() => {
+    async function fetchChurchIds() {
+      if (!userId) {
+        return;
+      }
+      const data = await getUserChurchIds(userId);
+
+      if (!data) {
+        return;
+      }
+      churchIdsRef.current = data;
+    }
+    fetchChurchIds();
+  });
 
   return (
     <SidebarMenu>
@@ -42,13 +55,14 @@ export function ChurchSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
-                <activeTeam.logo className="size-4" />
+                {/* <activeChurch.logo className="size-4" /> */}
+                {churchIdsRef.current.length}
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {activeTeam.name}
+                  {/* {activeChurch.name} */}
                 </span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                {/* <span className="truncate text-xs">{activeChurch.plan}</span> */}
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -62,10 +76,10 @@ export function ChurchSwitcher({
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Église
             </DropdownMenuLabel>
-            {teams.map((team, index) => (
+            {/* {teams.map((team, index) => (
               <DropdownMenuItem
                 key={team.name}
-                onClick={() => setActiveTeam(team)}
+                onClick={() => setActiveChurch(team)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
@@ -74,7 +88,7 @@ export function ChurchSwitcher({
                 {team.name}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
-            ))}
+            ))} */}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="gap-2 p-2"

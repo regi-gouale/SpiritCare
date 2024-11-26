@@ -29,11 +29,6 @@ import { SessionProvider } from "next-auth/react";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "gouale",
-    email: "regi.gouale@gouale.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "ICC Lyon",
@@ -160,18 +155,18 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <ChurchSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDepartments departments={data.projects} />
-      </SidebarContent>
-      <SidebarFooter>
-        <SessionProvider>
+      <SessionProvider>
+        <SidebarHeader>
+          <ChurchSwitcher />
+        </SidebarHeader>
+        <SidebarContent>
+          <NavMain items={data.navMain} />
+          <NavDepartments departments={data.projects} />
+        </SidebarContent>
+        <SidebarFooter>
           <NavUser />
-        </SessionProvider>
-      </SidebarFooter>
+        </SidebarFooter>
+      </SessionProvider>
       <SidebarRail />
     </Sidebar>
   );
