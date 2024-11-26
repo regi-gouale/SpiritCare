@@ -189,10 +189,10 @@ export default async function PersonIdPage(props: {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-center space-x-4 align-middle">
-                        <span className="truncate font-epilogue text-sm font-semibold">
+                        <span className="w-16 font-epilogue text-sm font-semibold">
                           Raison :
                         </span>
-                        <span className="font-epilogue text-sm">
+                        <span className="truncate font-epilogue text-sm">
                           {report.reason}
                         </span>
                       </div>

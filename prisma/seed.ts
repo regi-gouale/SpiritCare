@@ -109,10 +109,51 @@ async function createPersons(numberOfPersons: number = 5) {
   return persons;
 }
 
+async function createReports(numberOfReports: number = 5) {
+  const users = await prisma.user.findMany();
+  const reports = [];
+  for (let i = 0; i < numberOfReports; i++) {
+    const user = users[Math.floor(Math.random() * users.length)];
+
+    const userId = user.id;
+    const churchId = user.churchId;
+
+    if (!churchId) {
+      continue;
+    }
+
+    const persons = await prisma.person.findMany({
+      where: {
+        churchId,
+      },
+    });
+
+    const personId = persons[Math.floor(Math.random() * persons.length)].id;
+    const content = faker.lorem.paragraph();
+    const createdAt = faker.date.recent();
+
+    reports.push(
+      await prisma.report.create({
+        data: {
+          userId,
+          personId,
+          content,
+          date: createdAt,
+          reason: faker.lorem.sentence(),
+          churchId: users.find((user) => user.id === userId)?.churchId || "",
+        },
+      })
+    );
+  }
+
+  return reports;
+}
+
 async function main() {
   await createChurch();
   await createUsers(20);
   await createPersons(1000);
+  await createReports(5000);
 }
 
 main()
