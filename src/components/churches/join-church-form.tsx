@@ -48,8 +48,7 @@ export const JoinChurchForm = () => {
 
       form.reset();
       router.push(`/dashboard/${response.data.id}`);
-    } else
-      toast.error("Une erreur est survenue lors de la création de l'église");
+    } else toast.error("Erreur : " + response.error);
   }
 
   return (

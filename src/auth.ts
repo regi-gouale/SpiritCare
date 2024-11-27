@@ -1,6 +1,6 @@
 import { Role } from "@prisma/client";
 import { compare } from "bcryptjs";
-import NextAuth, { CredentialsSignin, User } from "next-auth";
+import NextAuth, { CredentialsSignin, NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./lib/prisma";
 
@@ -89,4 +89,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-});
+  trustHost: true,
+  secret: process.env.AUTH_SECRET || "secret key",
+} satisfies NextAuthConfig);

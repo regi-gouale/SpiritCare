@@ -15,6 +15,7 @@ export default async function ChurchesCreatePage() {
   }
 
   if (session.user.role !== Role.ADMIN) {
+    console.error("User is not an admin: ", session.user.role);
     redirect("/churches/join");
   }
 

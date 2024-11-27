@@ -12,15 +12,15 @@ import {
 import { User } from "@prisma/client";
 import { Bell, LogOut, SettingsIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { FC } from "react";
 
-const NotificationsButton: React.FC = () => (
+const NotificationsButton: FC = () => (
   <Button variant="ghost" size="icon">
     <Bell className="size-5" />
   </Button>
 );
 
-export const Header: React.FC = async () => {
+export const Header: FC = async () => {
   const session = await auth();
 
   if (!session) {

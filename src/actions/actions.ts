@@ -231,6 +231,8 @@ export const joinChurch = async (
       },
     });
 
+    revalidatePath(`/dashboard/${church.id}`);
+
     return {
       ok: true,
       error: null,
@@ -238,13 +240,13 @@ export const joinChurch = async (
     };
   } catch (error) {
     console.error(
-      "Une erreur est survenue lors de la création du rapport",
+      "Une erreur est survenue lors de l'adhésion à l'église",
       error
     );
     return {
       ok: false,
       error:
-        `Une erreur est survenue lors de la création du rapport. ${error}`.trim(),
+        `Une erreur est survenue lors de l'adhesion à l'église. ${error}`.trim(),
       data: null,
     };
   }
